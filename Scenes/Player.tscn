@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dabtg02t6sq0s"]
+
+[ext_resource type="Texture2D" uid="uid://blmwbkqvhgsw1" path="res://Art/Player/MainSheep.png" id="1_dx1v8"]
+[ext_resource type="Script" path="res://scripts/Player.gd" id="1_ryimr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i6xwx"]
+radius = 8.06226
+
+[node name="Player" type="CharacterBody2D"]
+disable_mode = 2
+script = ExtResource("1_ryimr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("1_dx1v8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_i6xwx")
