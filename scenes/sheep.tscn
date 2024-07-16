@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dmt6bsnqo3g7w" path="res://assets/sheep.png" id="1_4br7s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fkawn"]
-size = Vector2(40, 25)
+size = Vector2(16.875, 11.6875)
 
 [node name="sheep" type="CharacterBody2D"]
 
@@ -11,5 +11,5 @@ size = Vector2(40, 25)
 texture = ExtResource("1_4br7s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1)
+position = Vector2(2, -2)
 shape = SubResource("RectangleShape2D_fkawn")

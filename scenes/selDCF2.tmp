@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dlbc4foeijfsx"]
+
+[ext_resource type="Script" path="res://scripts/selection.gd" id="1_dgk11"]
+
+[node name="Selection" type="Area2D"]
+script = ExtResource("1_dgk11")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
