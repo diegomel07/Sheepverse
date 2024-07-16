@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxar7vnu4svge"]
+
+[ext_resource type="PackedScene" uid="uid://dalrerbbp32nk" path="res://scenes/sheep.tscn" id="1_k7cn1"]
+[ext_resource type="PackedScene" uid="uid://dlbc4foeijfsx" path="res://scenes/selection.tscn" id="2_d7xip"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_jqy5y"]
+distance = -403.0
+
+[node name="Gameplay" type="Node2D"]
+
+[node name="Area2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("WorldBoundaryShape2D_jqy5y")
+
+[node name="sheep" parent="." instance=ExtResource("1_k7cn1")]
+position = Vector2(354, 272)
+
+[node name="sheep2" parent="." instance=ExtResource("1_k7cn1")]
+position = Vector2(609, 261)
+
+[node name="sheep3" parent="." instance=ExtResource("1_k7cn1")]
+position = Vector2(527, 328)
+
+[node name="sheep4" parent="." instance=ExtResource("1_k7cn1")]
+position = Vector2(448, 342)
+
+[node name="Selection" parent="." instance=ExtResource("2_d7xip")]
+position = Vector2(444, 262)
