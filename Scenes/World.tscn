@@ -1,0 +1,28 @@
+[gd_scene load_steps=7 format=3 uid="uid://by2ktrx18b768"]
+
+[ext_resource type="Script" path="res://Scenes/World.gd" id="1_3gy3t"]
+[ext_resource type="Texture2D" uid="uid://sirhrsemjsjl" path="res://Art/Map/Tile.png" id="2_cqfc5"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_x25q5"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0ybhi"]
+noise = SubResource("FastNoiseLite_x25q5")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sliy0"]
+texture = ExtResource("2_cqfc5")
+5:23/0 = 0
+7:17/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_siiud"]
+sources/0 = SubResource("TileSetAtlasSource_sliy0")
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_3gy3t")
+noiseTexture = SubResource("NoiseTexture2D_0ybhi")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_siiud")
+format = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(575, 327)
