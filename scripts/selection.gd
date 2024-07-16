@@ -15,6 +15,7 @@ var global_mouse = Vector2.ZERO
 var body_destinations = {}
 var stuck_timeout = 3.0  # Segundos antes de considerar que un cuerpo está atascado
 var body_stuck_time = {}
+var can_change_target = true
 
 func _ready():
 	polygon = Polygon2D.new()
@@ -26,13 +27,15 @@ func _ready():
 func _unhandled_input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
-			if not can_draw:
-				if body_selected:
+			if body_selected:
 					can_make_something = true
-					target_position = get_global_mouse_position()
+					if can_change_target:
+						target_position = get_global_mouse_position()
 					global_mouse = get_local_mouse_position()
 					print("Target position set to: ", target_position)
+			if not can_draw:
 				can_draw = true
+				can_change_target = true
 				points = PackedVector2Array()
 			points.append(get_local_mouse_position())
 			update_polygon()
@@ -40,7 +43,6 @@ func _unhandled_input(event):
 			if points.size() >= 3:
 				can_draw = false
 				update_polygon()
-				#check_bodies_in_polygon()
 			else:
 				points = PackedVector2Array()
 				update_polygon()
@@ -58,7 +60,6 @@ func update_polygon():
 	# Forzar la actualización de la forma de colisión
 	collision_polygon.disabled = true
 	collision_polygon.disabled = false
-
 
 func _process(delta):
 	if current_bodies.size() == 0:
@@ -92,11 +93,6 @@ func move_towards_random_point(body, delta):
 	var destination = assign_destination(body)
 	var previous_position = body.global_position
 	
-	print('Body: ', body.name)
-	print('Body position: ', body.global_position)
-	print('Destination: ', destination)
-	print('Target: ', target_position)
-	
 	# Calcula la dirección hacia el punto asignado
 	var direction = (destination - body.global_position).normalized()
 	
@@ -114,8 +110,8 @@ func move_towards_random_point(body, delta):
 		body_destinations.erase(body)  # Elimina el destino asignado
 	else:
 		can_draw = false
+		can_change_target = false
 		print('Distancia al destino: ', body.global_position.distance_to(destination))
-		
 		
 	# Verifica si el cuerpo se ha movido
 	if body.global_position.distance_to(previous_position) < 1:  # Ajusta este valor según sea necesario
@@ -135,6 +131,7 @@ func unstuck_body(body):
 	# Opcionalmente, mueve el cuerpo a una nueva posición inicial
 	body.global_position = target_position + Vector2(randf_range(-target_radius, target_radius), randf_range(-target_radius, target_radius))
 	body_stuck_time[body] = 0
+
 func _draw():
 	if points.size() > 1:
 		draw_polyline(points, Color.RED, 2.0)
