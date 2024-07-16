@@ -1,0 +1,63 @@
+[gd_scene load_steps=8 format=3 uid="uid://by2ktrx18b768"]
+
+[ext_resource type="Script" path="res://scripts/World.gd" id="1_3gy3t"]
+[ext_resource type="Texture2D" uid="uid://sirhrsemjsjl" path="res://Art/Map/Tile.png" id="2_cqfc5"]
+[ext_resource type="PackedScene" uid="uid://dabtg02t6sq0s" path="res://Scenes/Player.tscn" id="3_54r5s"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_x25q5"]
+frequency = 0.004
+metadata/_preview_in_3d_space_ = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0ybhi"]
+noise = SubResource("FastNoiseLite_x25q5")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bjrrk"]
+texture = ExtResource("2_cqfc5")
+11:3/0 = 0
+11:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+11:3/0/physics_layer_0/angular_velocity = 0.0
+15:3/0 = 0
+15:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+15:3/0/physics_layer_0/angular_velocity = 0.0
+21:3/0 = 0
+21:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+21:3/0/physics_layer_0/angular_velocity = 0.0
+28:3/0 = 0
+28:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+28:3/0/physics_layer_0/angular_velocity = 0.0
+34:3/next_alternative_id = 4
+34:3/0 = 0
+34:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+34:3/0/physics_layer_0/angular_velocity = 0.0
+34:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+34:3/2 = 2
+34:3/2/physics_layer_0/linear_velocity = Vector2(0, 0)
+34:3/2/physics_layer_0/angular_velocity = 0.0
+34:3/3 = 3
+34:3/3/physics_layer_0/linear_velocity = Vector2(0, 0)
+34:3/3/physics_layer_0/angular_velocity = 0.0
+41:3/0 = 0
+41:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+41:3/0/physics_layer_0/angular_velocity = 0.0
+3:3/0 = 0
+3:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:3/0/physics_layer_0/angular_velocity = 0.0
+
+[sub_resource type="TileSet" id="TileSet_eisax"]
+physics_layer_0/collision_layer = 1
+navigation_layer_0/layers = 0
+sources/0 = SubResource("TileSetAtlasSource_bjrrk")
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_3gy3t")
+noiseTexture = SubResource("NoiseTexture2D_0ybhi")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_eisax")
+format = 2
+
+[node name="Player" parent="." instance=ExtResource("3_54r5s")]
+position = Vector2(91, 78)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(-91, -78)
