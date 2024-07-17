@@ -87,7 +87,7 @@ func generateTerrain():
 				for i in range(4):
 					for j in range(4):
 						var vector = tileTypes[value]["position"]
-						tilemap.set_cell(0,Vector2(x+i,y+j) ,tileTypes[value]["tileId"], Vector2i(vector.x+i,vector.y+j ) )
+						tilemap.set_cell(1,Vector2(x+i,y+j) ,tileTypes[value]["tileId"], Vector2i(vector.x+i,vector.y+j ) )
 						matrix [x+i][y+j]["done"] = true
 				continue
 			tilemap.set_cell(0,Vector2(x,y) ,tileTypes[value]["tileId"], tileTypes[value]["position"])

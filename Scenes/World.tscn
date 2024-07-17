@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_3gy3t"]
 [ext_resource type="Texture2D" uid="uid://sirhrsemjsjl" path="res://Art/Map/Tile.png" id="2_cqfc5"]
-[ext_resource type="PackedScene" uid="uid://dabtg02t6sq0s" path="res://Scenes/Player.tscn" id="3_54r5s"]
+[ext_resource type="PackedScene" uid="uid://dabtg02t6sq0s" path="res://scenes/Player.tscn" id="3_54r5s"]
 [ext_resource type="Texture2D" uid="uid://crwdfye277q60" path="res://assets/tiles/tiles.png" id="3_h36ps"]
-[ext_resource type="PackedScene" uid="uid://dalrerbbp32nk" path="res://Scenes/sheep.tscn" id="4_6rwpb"]
-[ext_resource type="PackedScene" uid="uid://dlbc4foeijfsx" path="res://Scenes/selection.tscn" id="5_x524r"]
+[ext_resource type="PackedScene" uid="uid://dalrerbbp32nk" path="res://scenes/sheep.tscn" id="4_6rwpb"]
+[ext_resource type="PackedScene" uid="uid://dlbc4foeijfsx" path="res://scenes/selection.tscn" id="5_x524r"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_x25q5"]
 frequency = 0.004
@@ -19,9 +19,11 @@ texture = ExtResource("2_cqfc5")
 11:3/0 = 0
 11:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 11:3/0/physics_layer_0/angular_velocity = 0.0
+11:3/0/custom_data_0 = "terrain"
 15:3/0 = 0
 15:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 15:3/0/physics_layer_0/angular_velocity = 0.0
+15:3/0/custom_data_0 = "terrain"
 21:3/0 = 0
 21:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 21:3/0/physics_layer_0/angular_velocity = 0.0
@@ -45,21 +47,26 @@ texture = ExtResource("2_cqfc5")
 3:3/0 = 0
 3:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:3/0/physics_layer_0/angular_velocity = 0.0
+3:3/0/custom_data_0 = "terrain"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_utbl0"]
 texture = ExtResource("3_h36ps")
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/custom_data_0 = "rock"
 1:0/0 = 0
 1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0/custom_data_0 = "rock"
 2:0/0 = 0
 2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:0/0/physics_layer_0/angular_velocity = 0.0
+2:0/0/custom_data_0 = "rock"
 3:0/0 = 0
 3:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:0/0/physics_layer_0/angular_velocity = 0.0
+3:0/0/custom_data_0 = "rock"
 4:0/0 = 0
 4:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 4:0/0/physics_layer_0/angular_velocity = 0.0
@@ -93,15 +100,19 @@ texture = ExtResource("3_h36ps")
 0:1/0 = 0
 0:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:1/0/physics_layer_0/angular_velocity = 0.0
+0:1/0/custom_data_0 = "rock"
 1:1/0 = 0
 1:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:1/0/physics_layer_0/angular_velocity = 0.0
+1:1/0/custom_data_0 = "rock"
 2:1/0 = 0
 2:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:1/0/physics_layer_0/angular_velocity = 0.0
+2:1/0/custom_data_0 = "rock"
 3:1/0 = 0
 3:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:1/0/physics_layer_0/angular_velocity = 0.0
+3:1/0/custom_data_0 = "rock"
 4:1/0 = 0
 4:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 4:1/0/physics_layer_0/angular_velocity = 0.0
@@ -135,15 +146,19 @@ texture = ExtResource("3_h36ps")
 0:2/0 = 0
 0:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:2/0/physics_layer_0/angular_velocity = 0.0
+0:2/0/custom_data_0 = "rock"
 1:2/0 = 0
 1:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:2/0/physics_layer_0/angular_velocity = 0.0
+1:2/0/custom_data_0 = "rock"
 2:2/0 = 0
 2:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:2/0/physics_layer_0/angular_velocity = 0.0
+2:2/0/custom_data_0 = "rock"
 3:2/0 = 0
 3:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:2/0/physics_layer_0/angular_velocity = 0.0
+3:2/0/custom_data_0 = "rock"
 4:2/0 = 0
 4:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 4:2/0/physics_layer_0/angular_velocity = 0.0
@@ -177,15 +192,19 @@ texture = ExtResource("3_h36ps")
 0:3/0 = 0
 0:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:3/0/physics_layer_0/angular_velocity = 0.0
+0:3/0/custom_data_0 = "rock"
 1:3/0 = 0
 1:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:3/0/physics_layer_0/angular_velocity = 0.0
+1:3/0/custom_data_0 = "rock"
 2:3/0 = 0
 2:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:3/0/physics_layer_0/angular_velocity = 0.0
+2:3/0/custom_data_0 = "rock"
 3:3/0 = 0
 3:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:3/0/physics_layer_0/angular_velocity = 0.0
+3:3/0/custom_data_0 = "rock"
 4:3/0 = 0
 4:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 4:3/0/physics_layer_0/angular_velocity = 0.0
@@ -219,15 +238,19 @@ texture = ExtResource("3_h36ps")
 0:4/0 = 0
 0:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:4/0/physics_layer_0/angular_velocity = 0.0
+0:4/0/custom_data_0 = "wood"
 1:4/0 = 0
 1:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:4/0/physics_layer_0/angular_velocity = 0.0
+1:4/0/custom_data_0 = "wood"
 2:4/0 = 0
 2:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:4/0/physics_layer_0/angular_velocity = 0.0
+2:4/0/custom_data_0 = "wood"
 3:4/0 = 0
 3:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:4/0/physics_layer_0/angular_velocity = 0.0
+3:4/0/custom_data_0 = "wood"
 4:4/0 = 0
 4:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 4:4/0/physics_layer_0/angular_velocity = 0.0
@@ -261,15 +284,19 @@ texture = ExtResource("3_h36ps")
 0:5/0 = 0
 0:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:5/0/physics_layer_0/angular_velocity = 0.0
+0:5/0/custom_data_0 = "wood"
 1:5/0 = 0
 1:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:5/0/physics_layer_0/angular_velocity = 0.0
+1:5/0/custom_data_0 = "wood"
 2:5/0 = 0
 2:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:5/0/physics_layer_0/angular_velocity = 0.0
+2:5/0/custom_data_0 = "wood"
 3:5/0 = 0
 3:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:5/0/physics_layer_0/angular_velocity = 0.0
+3:5/0/custom_data_0 = "wood"
 4:5/0 = 0
 4:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 4:5/0/physics_layer_0/angular_velocity = 0.0
@@ -303,15 +330,19 @@ texture = ExtResource("3_h36ps")
 0:6/0 = 0
 0:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:6/0/physics_layer_0/angular_velocity = 0.0
+0:6/0/custom_data_0 = "wood"
 1:6/0 = 0
 1:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:6/0/physics_layer_0/angular_velocity = 0.0
+1:6/0/custom_data_0 = "wood"
 2:6/0 = 0
 2:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:6/0/physics_layer_0/angular_velocity = 0.0
+2:6/0/custom_data_0 = "wood"
 3:6/0 = 0
 3:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:6/0/physics_layer_0/angular_velocity = 0.0
+3:6/0/custom_data_0 = "wood"
 4:6/0 = 0
 4:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 4:6/0/physics_layer_0/angular_velocity = 0.0
@@ -345,15 +376,19 @@ texture = ExtResource("3_h36ps")
 0:7/0 = 0
 0:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:7/0/physics_layer_0/angular_velocity = 0.0
+0:7/0/custom_data_0 = "wood"
 1:7/0 = 0
 1:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:7/0/physics_layer_0/angular_velocity = 0.0
+1:7/0/custom_data_0 = "wood"
 2:7/0 = 0
 2:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:7/0/physics_layer_0/angular_velocity = 0.0
+2:7/0/custom_data_0 = "wood"
 3:7/0 = 0
 3:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:7/0/physics_layer_0/angular_velocity = 0.0
+3:7/0/custom_data_0 = "wood"
 4:7/0 = 0
 4:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 4:7/0/physics_layer_0/angular_velocity = 0.0
@@ -472,6 +507,8 @@ texture = ExtResource("3_h36ps")
 [sub_resource type="TileSet" id="TileSet_eisax"]
 physics_layer_0/collision_layer = 1
 navigation_layer_0/layers = 0
+custom_data_layer_0/name = "type"
+custom_data_layer_0/type = 4
 sources/0 = SubResource("TileSetAtlasSource_bjrrk")
 sources/1 = SubResource("TileSetAtlasSource_utbl0")
 
@@ -480,14 +517,16 @@ script = ExtResource("1_3gy3t")
 noiseTexture = SubResource("NoiseTexture2D_0ybhi")
 
 [node name="TileMap" type="TileMap" parent="."]
+unique_name_in_owner = true
 position = Vector2(-1, 1)
 tile_set = SubResource("TileSet_eisax")
 format = 2
+layer_1/tile_data = PackedInt32Array()
 
 [node name="Player" parent="." instance=ExtResource("3_54r5s")]
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(2, 2)
+position_smoothing_enabled = true
 
 [node name="sheep" parent="." instance=ExtResource("4_6rwpb")]
 position = Vector2(164, 115)
@@ -499,4 +538,4 @@ position = Vector2(230, 171)
 position = Vector2(275, 35)
 
 [node name="Selection" parent="." instance=ExtResource("5_x524r")]
-position = Vector2(0, -5)
+position = Vector2(-7, -10)
