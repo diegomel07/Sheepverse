@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bxar7vnu4svge"]
 
-[ext_resource type="PackedScene" uid="uid://dalrerbbp32nk" path="res://scenes/sheep.tscn" id="1_k7cn1"]
-[ext_resource type="PackedScene" uid="uid://dlbc4foeijfsx" path="res://scenes/selection.tscn" id="2_d7xip"]
+[ext_resource type="PackedScene" uid="uid://dalrerbbp32nk" path="res://Scenes/sheep.tscn" id="1_k7cn1"]
+[ext_resource type="PackedScene" uid="uid://dlbc4foeijfsx" path="res://Scenes/selection.tscn" id="2_d7xip"]
 
 [node name="Gameplay" type="Node2D"]
 
