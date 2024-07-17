@@ -1,5 +1,7 @@
 extends Area2D
 
+@onready var tile_map = %TileMap
+
 var polygon: Polygon2D
 var collision_polygon: CollisionPolygon2D
 var drawing = false
@@ -14,25 +16,30 @@ var target_radius: float = 80  # Radio del círculo objetivo
 var global_mouse = Vector2.ZERO
 var body_destinations = {}
 var stuck_timeout = 1.0  # Segundos antes de considerar que un cuerpo está atascado
+var collect_timeout = 10.0 # Segundos que se tardan en recolectar
 var body_stuck_time = {}
 var can_change_target = true
+var what_sheeps_doing: String = 'nothing'
+var sheeps_can_collect = false
+
 
 func _ready():
 	polygon = Polygon2D.new()
-	polygon.color = Color(0, 0, 1, 0.5)  # Azul semitransparente
+	polygon.color = Color(0, 0, 0, 0.5)  # Azul semitransparente
 	add_child(polygon)
 	collision_polygon = CollisionPolygon2D.new()
 	add_child(collision_polygon)
 
+
 func _unhandled_input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
+			can_make_something = true
+			if can_change_target:
+				target_position = get_global_mouse_position()
+			global_mouse = get_local_mouse_position()
 			if body_selected:
-					can_make_something = true
-					if can_change_target:
-						target_position = get_global_mouse_position()
-					global_mouse = get_local_mouse_position()
-					print("Target position set to: ", target_position)
+				check_tile()
 			if not can_draw:
 				can_draw = true
 				can_change_target = true
@@ -60,18 +67,62 @@ func update_polygon():
 	# Forzar la actualización de la forma de colisión
 	collision_polygon.disabled = true
 	collision_polygon.disabled = false
+	
 
 func _process(delta):
+	# Collecting
+	if what_sheeps_doing == 'nothing' and sheeps_can_collect:
+		can_draw = false
+		can_change_target = false
+		can_make_something = false
+		print('Collecting')
+		time_collecting += delta
+		print(time_collecting)
+		if time_collecting >= collect_timeout:
+			can_draw = true
+			can_change_target = true
+			can_make_something = true
+			sheeps_can_collect = false
+			collect_timeout = 10
+			print('Collected!')
+	
+	# Moving
+	if can_make_something:
+		make_something(delta)
 	if current_bodies.size() == 0:
 		can_make_something = false
 	queue_redraw()
 
-func _physics_process(delta):
-	if can_make_something:
+
+func check_tile():
+	# Obtiene la posición del clic en coordenadas globales
+	var click_position = get_global_mouse_position()
+	
+	# Convierte la posición global a coordenadas de tile
+	var tile_position = tile_map.local_to_map(tile_map.to_local(click_position))
+	
+	for i in tile_map.get_layers_count():
+		# obtiene los datos del tile en esa posicion
+		var tile_data = tile_map.get_cell_tile_data(i, tile_position)
+		if !tile_data is TileData:
+			continue
+		# obtiene el tipo de tile
+		var tile_type = tile_data.get_custom_data_by_layer_id(0)
+		if tile_type == 'terrain':
+			sheeps_can_collect = false
+			what_sheeps_doing = 'walking'
+		elif tile_type == 'rock' or tile_type == 'wood':
+			time_collecting = 0
+			collect_timeout -= current_bodies.size() - 1
+			sheeps_can_collect = true
+		print("Clic en tile en posición: ", tile_position, ' Tipo: ', tile_type)
+
+var time_collecting = 0
+func make_something(delta):
+	# move towards the click
+	if what_sheeps_doing == "walking":
 		for body in current_bodies:
 			move_towards_random_point(body, delta)
-	
-		
 
 func assign_destination(body):
 	# Si el cuerpo ya tiene un destino asignado, lo devolvemos
@@ -87,6 +138,7 @@ func assign_destination(body):
 	body_destinations[body] = random_point
 	
 	return random_point
+
 
 func move_towards_random_point(body, delta):
 	# Obtiene el punto de destino asignado para este cuerpo
@@ -106,13 +158,16 @@ func move_towards_random_point(body, delta):
 	# Verifica si el cuerpo ha llegado al punto asignado
 	if body.global_position.distance_to(destination) < 30:  # Ajusta este valor según sea necesario
 		body.velocity = Vector2.ZERO
-		print(body.name, ' ha llegado a su destino')
+		#print(body.name, ' ha llegado a su destino')
 		current_bodies.erase(body)
 		body_destinations.erase(body)  # Elimina el destino asignado
+		if current_bodies.size() == 0:
+			what_sheeps_doing = 'nothing'
 	else:
 		can_draw = false
 		can_change_target = false
-		print('Distancia al destino: ', body.global_position.distance_to(destination))
+		body_selected = false
+		#print('Distancia al destino: ', body.global_position.distance_to(destination))
 		
 	# Verifica si el cuerpo se ha movido
 	if body.global_position.distance_to(previous_position) < 1:  # Ajusta este valor según sea necesario
@@ -133,13 +188,17 @@ func unstuck_body(body):
 	body.global_position = target_position + Vector2(randf_range(-target_radius, target_radius), randf_range(-target_radius, target_radius))
 	body_stuck_time[body] = 0
 
+var dash_length = 10  # Longitud de cada segmento de la línea punteada
+var gap_length = 5    # Longitud del espacio entre segmentos
+
 func _draw():
 	if points.size() > 1:
-		draw_polyline(points, Color.RED, 2.0)
-	draw_circle(global_mouse, target_radius, Color(1,0,0, 0.5))
+		draw_polyline(points, Color(166, 146, 176), 2.0)
+	#draw_circle(global_mouse, target_radius, Color(1,0,0, 0.5))
+	
 
 func _on_body_entered(body):
-	if body is CharacterBody2D and !drawing:
+	if body is CharacterBody2D and body.name != "Player" and !drawing:
 		if not current_bodies.has(body):
 			current_bodies.push_back(body)
 			body_selected = true

@@ -6,7 +6,6 @@ var direction: Vector2
 func _physics_process(delta):
 	
 	direction = velocity.normalized()
-	print(velocity)
 	
 	# flipping the character
 	if direction.x != 0:

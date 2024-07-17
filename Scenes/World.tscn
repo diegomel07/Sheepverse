@@ -55,6 +55,7 @@ script = ExtResource("1_3gy3t")
 noiseTexture = SubResource("NoiseTexture2D_0ybhi")
 
 [node name="TileMap" type="TileMap" parent="."]
+unique_name_in_owner = true
 tile_set = SubResource("TileSet_eisax")
 format = 2
 
