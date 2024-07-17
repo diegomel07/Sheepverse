@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://by2ktrx18b768"]
+[gd_scene load_steps=10 format=3 uid="uid://by2ktrx18b768"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_3gy3t"]
 [ext_resource type="Texture2D" uid="uid://sirhrsemjsjl" path="res://Art/Map/Tile.png" id="2_cqfc5"]
-[ext_resource type="PackedScene" uid="uid://dabtg02t6sq0s" path="res://Scenes/Player.tscn" id="3_54r5s"]
+[ext_resource type="PackedScene" uid="uid://dabtg02t6sq0s" path="res://scenes/Player.tscn" id="3_54r5s"]
+[ext_resource type="PackedScene" uid="uid://dalrerbbp32nk" path="res://scenes/sheep.tscn" id="4_6rwpb"]
+[ext_resource type="PackedScene" uid="uid://dlbc4foeijfsx" path="res://scenes/selection.tscn" id="5_x524r"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_x25q5"]
 frequency = 0.004
@@ -57,7 +59,18 @@ tile_set = SubResource("TileSet_eisax")
 format = 2
 
 [node name="Player" parent="." instance=ExtResource("3_54r5s")]
-position = Vector2(91, 78)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2(-91, -78)
+zoom = Vector2(2, 2)
+
+[node name="sheep" parent="." instance=ExtResource("4_6rwpb")]
+position = Vector2(169, 98)
+
+[node name="sheep2" parent="." instance=ExtResource("4_6rwpb")]
+position = Vector2(230, 171)
+
+[node name="sheep3" parent="." instance=ExtResource("4_6rwpb")]
+position = Vector2(275, 35)
+
+[node name="Selection" parent="." instance=ExtResource("5_x524r")]
+position = Vector2(0, -5)

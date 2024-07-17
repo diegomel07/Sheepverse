@@ -13,7 +13,7 @@ var can_make_something = false
 var target_radius: float = 80  # Radio del círculo objetivo
 var global_mouse = Vector2.ZERO
 var body_destinations = {}
-var stuck_timeout = 3.0  # Segundos antes de considerar que un cuerpo está atascado
+var stuck_timeout = 1.0  # Segundos antes de considerar que un cuerpo está atascado
 var body_stuck_time = {}
 var can_change_target = true
 
@@ -105,6 +105,7 @@ func move_towards_random_point(body, delta):
 	
 	# Verifica si el cuerpo ha llegado al punto asignado
 	if body.global_position.distance_to(destination) < 30:  # Ajusta este valor según sea necesario
+		body.velocity = Vector2.ZERO
 		print(body.name, ' ha llegado a su destino')
 		current_bodies.erase(body)
 		body_destinations.erase(body)  # Elimina el destino asignado

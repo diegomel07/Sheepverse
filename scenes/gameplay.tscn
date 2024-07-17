@@ -5,17 +5,38 @@
 
 [node name="Gameplay" type="Node2D"]
 
-[node name="sheep" parent="." instance=ExtResource("1_k7cn1")]
-position = Vector2(354, 272)
-
 [node name="sheep2" parent="." instance=ExtResource("1_k7cn1")]
 position = Vector2(609, 261)
 
 [node name="sheep3" parent="." instance=ExtResource("1_k7cn1")]
-position = Vector2(527, 328)
+position = Vector2(609, 261)
 
 [node name="sheep4" parent="." instance=ExtResource("1_k7cn1")]
-position = Vector2(448, 342)
+position = Vector2(609, 261)
+
+[node name="sheep5" parent="." instance=ExtResource("1_k7cn1")]
+position = Vector2(609, 261)
+
+[node name="sheep6" parent="." instance=ExtResource("1_k7cn1")]
+position = Vector2(609, 261)
+
+[node name="sheep7" parent="." instance=ExtResource("1_k7cn1")]
+position = Vector2(609, 261)
+
+[node name="sheep8" parent="." instance=ExtResource("1_k7cn1")]
+position = Vector2(609, 261)
+
+[node name="sheep9" parent="." instance=ExtResource("1_k7cn1")]
+position = Vector2(609, 261)
+
+[node name="sheep10" parent="." instance=ExtResource("1_k7cn1")]
+position = Vector2(609, 261)
+
+[node name="sheep11" parent="." instance=ExtResource("1_k7cn1")]
+position = Vector2(922, 152)
+
+[node name="sheep12" parent="." instance=ExtResource("1_k7cn1")]
+position = Vector2(190, 341)
 
 [node name="Selection" parent="." instance=ExtResource("2_d7xip")]
 position = Vector2(443, 181)
