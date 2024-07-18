@@ -3,6 +3,9 @@ extends Area2D
 @onready var tile_map = %TileMap
 @onready var collecting_animation = $Collecting_animation
 @onready var player = %Player
+@onready var speech_sound = preload("res://assets/sounds/meeeeeh.wav")
+@onready var speech_sound2 = preload("res://assets/sounds/click.wav")
+
 
 var polygon: Polygon2D
 var collision_polygon: CollisionPolygon2D
@@ -132,7 +135,8 @@ func check_tile():
 		if tile_type == 'terrain':
 			sheeps_can_collect = false
 			what_sheeps_doing = 'walking'
-		elif tile_type == 'rock' or tile_type == 'wood' or tile_type == "grass":
+		if tile_type == 'rock' or tile_type == 'wood' or tile_type == "grass":
+			DialogueManager.start_dialog(["recolecten perras"], speech_sound)
 			for body in current_bodies:
 				if body.get_stamina() >= 0:
 					cont_sheeps_with_stamina += 1
@@ -145,12 +149,14 @@ func check_tile():
 			if cont_sheeps_with_stamina > 0:
 				collecting_type = tile_type
 				sheeps_can_collect = true
-		print("Clic en tile en posición: ", tile_position, ' Tipo: ', tile_type)
+		#print("Clic en tile en posición: ", tile_position, ' Tipo: ', tile_type)
 
 var time_collecting = 0
 func make_something(delta):
 	# move towards the click
 	if what_sheeps_doing == "walking":
+		if !sheeps_can_collect:
+			DialogueManager.start_dialog(["caminen perras"], speech_sound)
 		for body in current_bodies:
 			move_towards_random_point(body, delta)
 

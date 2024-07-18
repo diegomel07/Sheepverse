@@ -5,19 +5,19 @@
 
 [sub_resource type="Resource" id="Resource_cj36h"]
 script = ExtResource("2_hu2t5")
-amout = 0
+amount = 0
 
 [sub_resource type="Resource" id="Resource_gd2en"]
 script = ExtResource("2_hu2t5")
-amout = 0
+amount = 0
 
 [sub_resource type="Resource" id="Resource_5aby3"]
 script = ExtResource("2_hu2t5")
-amout = 0
+amount = 0
 
 [sub_resource type="Resource" id="Resource_2rtsf"]
 script = ExtResource("2_hu2t5")
-amout = 0
+amount = 0
 
 [resource]
 script = ExtResource("1_18omc")

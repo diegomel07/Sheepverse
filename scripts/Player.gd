@@ -37,6 +37,7 @@ func _physics_process(delta):
 		animated_sprite_2d.play("idle")
 	
 	move_and_slide()
+	DialogueManager.player_global_position = global_position
 
 
 func set_rocks(new_rocks):
