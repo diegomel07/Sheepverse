@@ -1,6 +1,7 @@
-[gd_scene load_steps=19 format=3 uid="uid://dabtg02t6sq0s"]
+[gd_scene load_steps=20 format=3 uid="uid://dabtg02t6sq0s"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_ryimr"]
+[ext_resource type="Resource" uid="uid://tyu4g3uuuntl" path="res://inventory/items/player_inventory.tres" id="2_87nn6"]
 [ext_resource type="Texture2D" uid="uid://bjedyphr0uxuh" path="res://assets/sheeps/Goat.png" id="2_ec0ys"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k1p0i"]
@@ -130,6 +131,7 @@ radius = 9.0
 [node name="Player" type="CharacterBody2D"]
 disable_mode = 2
 script = ExtResource("1_ryimr")
+inventory = ExtResource("2_87nn6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_dv4xk")

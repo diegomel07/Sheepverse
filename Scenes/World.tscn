@@ -88,17 +88,19 @@ layer_1/tile_data = PackedInt32Array()
 
 [node name="Player" parent="." instance=ExtResource("3_54r5s")]
 unique_name_in_owner = true
+position = Vector2(1618, 917)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(2, 2)
 
 [node name="sheep" parent="." instance=ExtResource("4_6rwpb")]
-position = Vector2(164, 115)
+position = Vector2(1412, 861)
 
 [node name="sheep2" parent="." instance=ExtResource("4_6rwpb")]
-position = Vector2(230, 171)
+position = Vector2(1478, 917)
 
 [node name="sheep3" parent="." instance=ExtResource("4_6rwpb")]
-position = Vector2(275, 35)
+position = Vector2(1523, 781)
 
 [node name="Selection" parent="." instance=ExtResource("5_x524r")]
 position = Vector2(0, -5)
