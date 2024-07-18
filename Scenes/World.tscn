@@ -1,10 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://by2ktrx18b768"]
+[gd_scene load_steps=12 format=3 uid="uid://by2ktrx18b768"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_3gy3t"]
-[ext_resource type="Texture2D" uid="uid://driuxnf5kqty3" path="res://assets/tiles/Tileset.png" id="2_788ad"]
-[ext_resource type="PackedScene" uid="uid://dabtg02t6sq0s" path="res://Scenes/Player.tscn" id="3_54r5s"]
-[ext_resource type="PackedScene" uid="uid://dalrerbbp32nk" path="res://Scenes/sheep.tscn" id="4_6rwpb"]
-[ext_resource type="PackedScene" uid="uid://dlbc4foeijfsx" path="res://Scenes/selection.tscn" id="5_x524r"]
+[ext_resource type="PackedScene" uid="uid://dabtg02t6sq0s" path="res://scenes/Player.tscn" id="3_54r5s"]
+[ext_resource type="Texture2D" uid="uid://dnil7lnql17hp" path="res://assets/tiles/tiles.png" id="3_luefk"]
+[ext_resource type="PackedScene" uid="uid://dalrerbbp32nk" path="res://scenes/sheep.tscn" id="4_6rwpb"]
+[ext_resource type="PackedScene" uid="uid://dlbc4foeijfsx" path="res://scenes/selection.tscn" id="5_x524r"]
+[ext_resource type="PackedScene" uid="uid://ygarkdl44isq" path="res://scenes/inventory.tscn" id="6_j181l"]
+[ext_resource type="Script" path="res://scripts/CanvasLayer.gd" id="6_pwnb1"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_x25q5"]
 frequency = 0.072
@@ -12,31 +14,71 @@ frequency = 0.072
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0ybhi"]
 noise = SubResource("FastNoiseLite_x25q5")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m86nn"]
-texture = ExtResource("2_788ad")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7t8im"]
+texture = ExtResource("3_luefk")
 texture_region_size = Vector2i(32, 32)
-use_texture_padding = false
 0:0/size_in_atlas = Vector2i(2, 2)
 0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.08706, -18.5838, 2.36235, -26.4583, 5.98462, -25.9859, 14.0166, -17.7964, 16, -8.18949, 16, -2.20486, 21.1037, 0.47247, 24.5685, 4.25223, 25.8284, 9.6069, 28.0332, 13.0717, 27.5608, 17.3239, 19.5288, 24.8834, 13.7016, 23.6235, 8.66196, 25.5134, -3.1498, 25.0409, -9.29192, 26.3009, -15.2765, 25.0409, -22.9936, 16.8514, -24.5685, 10.2369, -22.8361, 6.92957, -19.0563, 2.83482, -18.4263, -2.04737, -19.5288, -4.7247, -17.4814, -8.50447, -14.6466, -10.5518, -11.1818, -11.3393, -8.66196, -16)
+0:0/0/custom_data_0 = "rock"
 0:2/size_in_atlas = Vector2i(2, 2)
 0:2/0 = 0
+0:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:2/0/physics_layer_0/angular_velocity = 0.0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, -11.9055, -21.4299, -3.75, -23.875, 7, -24.125, 14.625, -21.125, 18.5, -19.625, 22.3636, -17.4814, 23, -12.625, 23.5, -3.5, 22.375, 7.75, 27.375, 16.375, 31.5, 21.625, 31.625, 24.625, 28, 24, 27.125, 28.125, 21.875, 28.125, 18.75, 26.375, 12.75, 26.75, 8.625, 29.375, 2.5, 24.125, -1, 21.5, -5.5, 21.5, -6.5, 28.625, -18.125, 26.125, -20.125, 21.5, -28, 22, -27.875, 18, -25.375, 15.875, -25.125, 11, -19.375, 7.5)
+0:2/0/custom_data_0 = "wood"
 0:4/size_in_atlas = Vector2i(2, 2)
 0:4/0 = 0
-2:5/0 = 0
+0:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:4/0/physics_layer_0/angular_velocity = 0.0
+0:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-13.5, -12.75, -5.5, -16, 9, -16, 19, -15.25, 23.5, -5.5, 22.75, 1.75, 25.5, 9, 22.25, 20.25, 11.5, 22.5, -1, 22.5, -15, 21.25, -24.5, 19.25, -25.25, 8, -22.5, -6)
+0:4/0/custom_data_0 = "grass"
 3:5/0 = 0
+3:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:5/0/physics_layer_0/angular_velocity = 0.0
+3:5/0/custom_data_0 = "terrain"
 4:5/0 = 0
+4:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:5/0/physics_layer_0/angular_velocity = 0.0
+4:5/0/custom_data_0 = "terrain"
 2:0/0 = 0
+2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:0/0/physics_layer_0/angular_velocity = 0.0
+2:0/0/custom_data_0 = "terrain"
 3:0/0 = 0
+3:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:0/0/physics_layer_0/angular_velocity = 0.0
+0:6/0 = 0
+0:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:6/0/physics_layer_0/angular_velocity = 0.0
+0:6/0/custom_data_0 = "terrain"
+2:7/animation_columns = 7
+2:7/animation_frame_0/duration = 1.0
+2:7/animation_frame_1/duration = 1.0
+2:7/animation_frame_2/duration = 1.0
+2:7/animation_frame_3/duration = 1.0
+2:7/animation_frame_4/duration = 1.0
+2:7/animation_frame_5/duration = 1.0
+2:7/animation_frame_6/duration = 1.0
+2:7/0 = 0
+2:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:7/0/physics_layer_0/angular_velocity = 0.0
 
 [sub_resource type="TileSet" id="TileSet_1i4sm"]
 tile_size = Vector2i(32, 32)
-sources/0 = SubResource("TileSetAtlasSource_m86nn")
+physics_layer_0/collision_layer = 1
+custom_data_layer_0/name = "type"
+custom_data_layer_0/type = 4
+sources/0 = SubResource("TileSetAtlasSource_7t8im")
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_3gy3t")
 noiseTexture = SubResource("NoiseTexture2D_0ybhi")
 
 [node name="TileMap" type="TileMap" parent="."]
+unique_name_in_owner = true
 position = Vector2(-1, 1)
 tile_set = SubResource("TileSet_1i4sm")
 format = 2
@@ -45,9 +87,9 @@ layer_1/name = "objects"
 layer_1/tile_data = PackedInt32Array()
 
 [node name="Player" parent="." instance=ExtResource("3_54r5s")]
+unique_name_in_owner = true
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(2, 2)
 
 [node name="sheep" parent="." instance=ExtResource("4_6rwpb")]
 position = Vector2(164, 115)
@@ -60,3 +102,23 @@ position = Vector2(275, 35)
 
 [node name="Selection" parent="." instance=ExtResource("5_x524r")]
 position = Vector2(0, -5)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("6_pwnb1")
+
+[node name="inventory" parent="CanvasLayer" instance=ExtResource("6_j181l")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -174.5
+offset_top = -139.5
+offset_right = 174.5
+offset_bottom = 139.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="closed" from="CanvasLayer/inventory" to="." method="_on_inventory_closed"]
+[connection signal="opened" from="CanvasLayer/inventory" to="." method="_on_inventory_opened"]

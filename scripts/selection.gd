@@ -1,6 +1,8 @@
 extends Area2D
 
 @onready var tile_map = %TileMap
+@onready var collecting_animation = $Collecting_animation
+@onready var player = %Player
 
 var polygon: Polygon2D
 var collision_polygon: CollisionPolygon2D
@@ -16,11 +18,15 @@ var target_radius: float = 80  # Radio del círculo objetivo
 var global_mouse = Vector2.ZERO
 var body_destinations = {}
 var stuck_timeout = 1.0  # Segundos antes de considerar que un cuerpo está atascado
-var collect_timeout = 10.0 # Segundos que se tardan en recolectar
+var collect_timeout = 5.0 # Segundos que se tardan en recolectar
 var body_stuck_time = {}
 var can_change_target = true
 var what_sheeps_doing: String = 'nothing'
 var sheeps_can_collect = false
+var tile_erase_layer: int
+var tile_erase_position: Vector2
+var collecting_type: String
+var cont_sheeps_with_stamina: int
 
 
 func _ready():
@@ -72,19 +78,33 @@ func update_polygon():
 func _process(delta):
 	# Collecting
 	if what_sheeps_doing == 'nothing' and sheeps_can_collect:
+		collecting_animation.visible = true
+		collecting_animation.global_position = target_position
+		collecting_animation.get_node("AnimatedSprite2D").play('collecting')
 		can_draw = false
 		can_change_target = false
 		can_make_something = false
-		print('Collecting')
+		#print('Collecting')
 		time_collecting += delta
 		print(time_collecting)
+		
 		if time_collecting >= collect_timeout:
+			collecting_animation.visible = false
+			collecting_animation.get_node("AnimatedSprite2D").stop()
+			tile_map.erase_cell(tile_erase_layer, tile_erase_position)
 			can_draw = true
 			can_change_target = true
 			can_make_something = true
 			sheeps_can_collect = false
-			collect_timeout = 10
-			print('Collected!')
+			collect_timeout = 5
+			
+			# añadiendo la cantidad de objectos recolectados
+			if collecting_type == 'rock':
+				player.set_rocks(player.get_rocks()+4)
+			elif collecting_type == 'wood':
+				player.set_wood(player.get_wood()+4)
+			elif collecting_type == 'grass':
+				player.set_grass(player.get_grass()+4)
 	
 	# Moving
 	if can_make_something:
@@ -95,6 +115,7 @@ func _process(delta):
 
 
 func check_tile():
+	cont_sheeps_with_stamina = 0
 	# Obtiene la posición del clic en coordenadas globales
 	var click_position = get_global_mouse_position()
 	
@@ -111,10 +132,19 @@ func check_tile():
 		if tile_type == 'terrain':
 			sheeps_can_collect = false
 			what_sheeps_doing = 'walking'
-		elif tile_type == 'rock' or tile_type == 'wood':
+		elif tile_type == 'rock' or tile_type == 'wood' or tile_type == "grass":
+			for body in current_bodies:
+				if body.get_stamina() >= 0:
+					cont_sheeps_with_stamina += 1
+				body.set_stamina(body.get_stamina()-20)
+				#print('La oveja ', body.name, ' tiene ', body.get_stamina(), ' de stamina')
+			tile_erase_layer = i
+			tile_erase_position = tile_position
 			time_collecting = 0
-			collect_timeout -= current_bodies.size() - 1
-			sheeps_can_collect = true
+			collect_timeout -= cont_sheeps_with_stamina
+			if cont_sheeps_with_stamina > 0:
+				collecting_type = tile_type
+				sheeps_can_collect = true
 		print("Clic en tile en posición: ", tile_position, ' Tipo: ', tile_type)
 
 var time_collecting = 0
