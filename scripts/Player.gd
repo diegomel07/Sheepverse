@@ -6,6 +6,7 @@ extends CharacterBody2D
 var wood = 0
 var rocks = 0
 var grass = 0
+var energy = 0
 
 var rock_item: InventoryItem = preload("res://inventory/items/rock.tres")
 var wood_item: InventoryItem = preload("res://inventory/items/wood.tres")
@@ -67,3 +68,10 @@ func set_grass(new_grass):
 
 func get_grass():
 	return grass
+
+func set_energy(new_energy):
+	energy = new_energy
+	print(energy)
+
+func get_energy():
+	return energy

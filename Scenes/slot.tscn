@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cyxqji5r5jraa" path="res://assets/tiles/invertorySlot.png" id="1_kg7td"]
 [ext_resource type="FontFile" uid="uid://df0se7qhe8blb" path="res://assets/fonts/NotJamChunkySans.ttf" id="3_c6i3k"]
 
-[node name="slot" type="Panel"]
+[node name="slot" type="Button"]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(32, 32)
 offset_right = 48.0
@@ -37,6 +37,6 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_c6i3k")
 theme_override_font_sizes/font_size = 13
-text = "4
+text = "
 "
 horizontal_alignment = 2

@@ -39,6 +39,8 @@ func _ready():
 	
 
 func update():
+	$NinePatchRect/Craft/fence/CenterContainer/Panel/Label.visible = false
+	$NinePatchRect/Craft/hamster/CenterContainer/Panel/Label.visible = false
 	for i in range(min(inventory.slots.size(), slots.size())):
 		slots[i].update(inventory.slots[i])
 

@@ -1,6 +1,20 @@
-[gd_scene load_steps=13 format=3 uid="uid://ciawa6gg05861"]
+[gd_scene load_steps=22 format=3 uid="uid://ciawa6gg05861"]
 
+[ext_resource type="Texture2D" uid="uid://bjjey3swsvyx7" path="res://assets/tiles/cloning.png" id="1_8cqac"]
 [ext_resource type="Texture2D" uid="uid://c40y7xyakhgoi" path="res://assets/tiles/MineFX-Sheet.png" id="1_ogg6u"]
+[ext_resource type="Texture2D" uid="uid://dwvdnomxswvuj" path="res://assets/tiles/hamster_animtain.png" id="3_1tlu4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bhvqp"]
+atlas = ExtResource("1_8cqac")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ugvpw"]
+atlas = ExtResource("1_8cqac")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_620r2"]
+atlas = ExtResource("1_8cqac")
+region = Rect2(192, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6s2i7"]
 atlas = ExtResource("1_ogg6u")
@@ -42,8 +56,38 @@ region = Rect2(192, 64, 64, 64)
 atlas = ExtResource("1_ogg6u")
 region = Rect2(256, 64, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_3jghx"]
+atlas = ExtResource("3_1tlu4")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xqis0"]
+atlas = ExtResource("3_1tlu4")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v2mdc"]
+atlas = ExtResource("3_1tlu4")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yaplh"]
+atlas = ExtResource("3_1tlu4")
+region = Rect2(192, 0, 64, 64)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_7wb8f"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bhvqp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ugvpw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_620r2")
+}],
+"loop": true,
+"name": &"cloning",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6s2i7")
@@ -78,6 +122,23 @@ animations = [{
 "loop": true,
 "name": &"collecting",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3jghx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xqis0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v2mdc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yaplh")
+}],
+"loop": true,
+"name": &"collecting_energy",
+"speed": 5.0
 }]
 
 [node name="Collecting_animation" type="Node2D"]
@@ -85,5 +146,7 @@ visible = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7wb8f")
-animation = &"collecting"
+animation = &"cloning"
+frame = 1
+frame_progress = 0.921822
 speed_scale = 2.0

@@ -1,8 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://ygarkdl44isq"]
+[gd_scene load_steps=6 format=3 uid="uid://ygarkdl44isq"]
 
 [ext_resource type="Script" path="res://scripts/inventory.gd" id="1_475kn"]
 [ext_resource type="Texture2D" uid="uid://btqntgfbs6857" path="res://assets/tiles/inventory.png" id="1_m6w3m"]
 [ext_resource type="PackedScene" uid="uid://dvdgqxmph0n7p" path="res://scenes/slot.tscn" id="2_lw2y8"]
+[ext_resource type="Texture2D" uid="uid://cyxqji5r5jraa" path="res://assets/tiles/invertorySlot.png" id="4_qhpp0"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m1ha5"]
+texture = ExtResource("4_qhpp0")
 
 [node name="inventory" type="Control"]
 custom_minimum_size = Vector2(237, 189)
@@ -22,7 +26,7 @@ patch_margin_top = 6
 patch_margin_right = 6
 patch_margin_bottom = 6
 
-[node name="GridContainer" type="GridContainer" parent="NinePatchRect"]
+[node name="Inventory" type="GridContainer" parent="NinePatchRect"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 1
 anchors_preset = -1
@@ -30,23 +34,126 @@ anchor_left = 0.27
 anchor_top = 0.5
 anchor_right = 0.27
 anchor_bottom = 0.5
-offset_left = -52.23
-offset_top = -52.0
-offset_right = 31.77
-offset_bottom = 31.0
+offset_left = -65.23
+offset_top = -96.0
+offset_right = 44.77
+offset_bottom = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 14
+theme_override_constants/v_separation = 14
+columns = 2
+
+[node name="slot" parent="NinePatchRect/Inventory" instance=ExtResource("2_lw2y8")]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+
+[node name="slot2" parent="NinePatchRect/Inventory" instance=ExtResource("2_lw2y8")]
+layout_mode = 2
+
+[node name="slot3" parent="NinePatchRect/Inventory" instance=ExtResource("2_lw2y8")]
+layout_mode = 2
+
+[node name="slot4" parent="NinePatchRect/Inventory" instance=ExtResource("2_lw2y8")]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+
+[node name="slot5" parent="NinePatchRect/Inventory" instance=ExtResource("2_lw2y8")]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+
+[node name="slot6" parent="NinePatchRect/Inventory" instance=ExtResource("2_lw2y8")]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+
+[node name="Craft" type="GridContainer" parent="NinePatchRect"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.27
+anchor_top = 0.5
+anchor_right = 0.27
+anchor_bottom = 0.5
+offset_left = 96.77
+offset_top = -10.0
+offset_right = 180.77
+offset_bottom = 74.0
 grow_horizontal = 2
 grow_vertical = 2
 columns = 2
 
-[node name="slot" parent="NinePatchRect/GridContainer" instance=ExtResource("2_lw2y8")]
+[node name="fence" parent="NinePatchRect/Craft" instance=ExtResource("2_lw2y8")]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 
-[node name="slot2" parent="NinePatchRect/GridContainer" instance=ExtResource("2_lw2y8")]
+[node name="Label" parent="NinePatchRect/Craft/fence/CenterContainer/Panel" index="1"]
+visible = false
+
+[node name="hamster" parent="NinePatchRect/Craft" instance=ExtResource("2_lw2y8")]
 layout_mode = 2
 
-[node name="slot3" parent="NinePatchRect/GridContainer" instance=ExtResource("2_lw2y8")]
+[node name="Label" parent="NinePatchRect/Craft/hamster/CenterContainer/Panel" index="1"]
+visible = false
+
+[node name="slot3" parent="NinePatchRect/Craft" instance=ExtResource("2_lw2y8")]
 layout_mode = 2
 
-[node name="slot4" parent="NinePatchRect/GridContainer" instance=ExtResource("2_lw2y8")]
+[node name="Label" parent="NinePatchRect/Craft/slot3/CenterContainer/Panel" index="1"]
+visible = false
+
+[node name="slot4" parent="NinePatchRect/Craft" instance=ExtResource("2_lw2y8")]
 layout_mode = 2
+
+[node name="Label" parent="NinePatchRect/Craft/slot4/CenterContainer/Panel" index="1"]
+visible = false
+
+[node name="Materials" type="GridContainer" parent="NinePatchRect"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.27
+anchor_top = 0.5
+anchor_right = 0.27
+anchor_bottom = 0.5
+offset_left = 198.77
+offset_top = -120.0
+offset_right = 246.77
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.8, 0.8)
+
+[node name="slot" parent="NinePatchRect/Materials" instance=ExtResource("2_lw2y8")]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+
+[node name="slot2" parent="NinePatchRect/Materials" instance=ExtResource("2_lw2y8")]
+layout_mode = 2
+
+[node name="slot3" parent="NinePatchRect/Materials" instance=ExtResource("2_lw2y8")]
+layout_mode = 2
+
+[node name="craftinSlot" parent="NinePatchRect" instance=ExtResource("2_lw2y8")]
+layout_mode = 0
+offset_left = 189.0
+offset_top = 21.0
+offset_right = 237.0
+offset_bottom = 69.0
+scale = Vector2(2, 2)
+
+[node name="crafting_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 225.0
+offset_top = 233.0
+offset_right = 262.0
+offset_bottom = 256.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_m1ha5")
+text = "craft
+"
+
+[connection signal="pressed" from="crafting_button" to="." method="_on_crafting_button_pressed"]
+
+[editable path="NinePatchRect/Craft/fence"]
+[editable path="NinePatchRect/Craft/hamster"]
+[editable path="NinePatchRect/Craft/slot3"]
+[editable path="NinePatchRect/Craft/slot4"]

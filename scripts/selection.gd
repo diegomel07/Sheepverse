@@ -4,7 +4,6 @@ extends Area2D
 @onready var collecting_animation = $Collecting_animation
 @onready var inventory: Inventory = preload("res://inventory/items/player_inventory.tres")
 @onready var sheeps = %sheeps.get_children()
-@onready var collecting_energy_animation = $Collecting_energy_animation
 @onready var player = %Player
 @onready var sheep = preload("res://Scenes/sheep.tscn")
 @onready var speech_sound = preload("res://assets/sounds/meeeeeh.wav")
@@ -37,6 +36,8 @@ var collecting_type: String
 var cont_sheeps_with_stamina: int
 var can_collect_energy = false
 var on_machine = false
+var sheep_collecting_energy
+var sheep_cloning
 
 func _ready():
 	polygon = Polygon2D.new()
@@ -106,22 +107,47 @@ func update_polygon():
 	collision_polygon.disabled = true
 	collision_polygon.disabled = false
 	
+@onready var cloning_timer: Timer = $cloning_timer
 
+var is_cloning = false
+func start_cloning():
+	is_cloning = true
+	collecting_animation.visible = true
+	collecting_animation.global_position = target_position
+	collecting_animation.get_node("AnimatedSprite2D").play("cloning")
+	
+	# Usar call_deferred para ejecutar finish_cloning en el próximo frame
+	get_tree().create_timer(3.0).timeout.connect(finish_cloning, CONNECT_ONE_SHOT)
+
+func finish_cloning():
+	print('awitado')
+	collecting_animation.visible = false
+	collecting_animation.get_node("AnimatedSprite2D").stop()
+	tile_map.set_cell(1,tile_erase_position, 0,Vector2(5,2))
+	sheep_cloning.visible = true
+	on_machine = false
+	player.set_energy(player.get_energy() - 10)
+	
+	
+	var new_sheep = sheep.instantiate()
+	new_sheep.global_position = Vector2(0, 0)
+	print("clonada")
+	%sheeps.add_child(new_sheep)
+	
+	is_cloning = false
 
 func _process(delta):
-	# Collecting
-	if on_machine:
-	#colocar
-		var new_sheep = sheep.instantiate()
-		new_sheep.global_position = Vector2(0, 0)
-		print("clonada")
-		add_child(new_sheep)
+	if on_machine and player.get_energy() >= 10 and not is_cloning:
+		tile_map.erase_cell(tile_erase_layer, tile_erase_position)
+		start_cloning()
+		
 	if what_sheeps_doing == 'nothing' and sheeps_can_collect:
 		if can_collect_energy:
-			collecting_energy_animation.visible = true
-			collecting_energy_animation.global_position = target_position
+			sheep_collecting_energy.visible = false
+			collecting_animation.visible = true
+			collecting_animation.global_position = target_position
 			tile_map.erase_cell(tile_erase_layer, tile_erase_position)
-			collecting_energy_animation.get_node("AnimatedSprite2D").play('default')
+			collecting_animation.get_node("AnimatedSprite2D").play("collecting_energy")
 		else:
 			collecting_animation.visible = true
 			collecting_animation.global_position = target_position
@@ -134,8 +160,8 @@ func _process(delta):
 		
 		if time_collecting >= collect_timeout:
 			if can_collect_energy:
-				collecting_energy_animation.visible = false
-				collecting_energy_animation.get_node("AnimatedSprite2D").stop()
+				collecting_animation.visible = false
+				collecting_animation.get_node("AnimatedSprite2D").stop()
 			else : 
 				collecting_animation.visible = false
 				collecting_animation.get_node("AnimatedSprite2D").stop()
@@ -155,9 +181,9 @@ func _process(delta):
 			elif collecting_type == 'grass':
 				player.set_grass(player.get_grass()+4)
 			elif collecting_type == 'energy':
+				sheep_collecting_energy.visible = true
 				tile_map.set_cell(1,tile_erase_position, 0,Vector2(5,0))
-				print("jejeje")
-				#player.set_energy(player.get_energy()+4)
+				player.set_energy(player.get_energy()+5)
 	
 	# Moving
 	if can_make_something:
@@ -185,12 +211,18 @@ func check_tile():
 		if tile_type == 'terrain':
 			sheeps_can_collect = false
 			what_sheeps_doing = 'walking'
-		if tile_type == "clone_machine":
+		if tile_type == "clone_machine" and player.get_energy() >= 10:
 			DialogueManager.start_dialog(["CLOOOOOONNN"], speech_sound)
+			for body in current_bodies:
+				sheep_cloning = body
+			sheep_cloning.visible = false
+			tile_erase_layer = i
+			tile_erase_position = tile_position
 			on_machine = true
 		if tile_type == 'rock' or tile_type == 'wood' or tile_type == "grass" or tile_type == "energy":
 			DialogueManager.start_dialog(["recolecten perras"], speech_sound)
 			for body in current_bodies:
+				sheep_collecting_energy = body
 				if body.get_stamina() >= 0:
 					cont_sheeps_with_stamina += 1
 					body.set_stamina(body.get_stamina()-20)
@@ -204,9 +236,6 @@ func check_tile():
 				sheeps_can_collect = true
 				if tile_type == "energy":
 					can_collect_energy= true
-					
-
-
 		#print("Clic en tile en posición: ", tile_position, ' Tipo: ', tile_type)
 
 var time_collecting = 0
