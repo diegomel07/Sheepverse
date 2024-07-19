@@ -58,6 +58,9 @@ func _recalculate_time(delta: float) -> void:
 		hour = int(current_day_minutes / MINUTES_PER_HOUR)
 		minute = int(current_day_minutes % MINUTES_PER_HOUR)
 	
+	if day == 3:
+		print('perdiste')
+	
 	if past_minute != minute:
 		past_minute = minute
 		time_tick.emit(day, hour, minute)

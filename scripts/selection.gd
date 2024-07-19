@@ -10,7 +10,6 @@ extends Area2D
 @onready var speech_sound2 = preload("res://assets/sounds/click.wav")
 
 
-
 var polygon: Polygon2D
 var collision_polygon: CollisionPolygon2D
 var drawing = false
@@ -120,14 +119,13 @@ func start_cloning():
 	get_tree().create_timer(3.0).timeout.connect(finish_cloning, CONNECT_ONE_SHOT)
 
 func finish_cloning():
-	print('awitado')
+	#print('awitado')
 	collecting_animation.visible = false
 	collecting_animation.get_node("AnimatedSprite2D").stop()
 	tile_map.set_cell(1,tile_erase_position, 0,Vector2(5,2))
 	sheep_cloning.visible = true
 	on_machine = false
 	player.set_energy(player.get_energy() - 10)
-	
 	
 	var new_sheep = sheep.instantiate()
 	new_sheep.global_position = Vector2(6, 6)
@@ -137,6 +135,9 @@ func finish_cloning():
 	is_cloning = false
 
 func _process(delta):
+	if sheeps.size() > 50:
+		print('ganaste')
+	
 	if on_machine and player.get_energy() >= 10 and not is_cloning:
 		tile_map.erase_cell(tile_erase_layer, tile_erase_position)
 		start_cloning()
@@ -214,7 +215,8 @@ func check_tile():
 		if tile_type == "clone_machine" and player.get_energy() >= 10:
 			DialogueManager.start_dialog(["CLOOOOOONNN"], speech_sound)
 			for body in current_bodies:
-				sheep_cloning = body
+				if body:
+					sheep_cloning = body
 			sheep_cloning.visible = false
 			tile_erase_layer = i
 			tile_erase_position = tile_position
@@ -222,10 +224,11 @@ func check_tile():
 		if tile_type == 'rock' or tile_type == 'wood' or tile_type == "grass" or tile_type == "energy":
 			DialogueManager.start_dialog(["recolecten perras"], speech_sound)
 			for body in current_bodies:
-				sheep_collecting_energy = body
-				if body.get_stamina() >= 0:
-					cont_sheeps_with_stamina += 1
-					body.set_stamina(body.get_stamina()-20)
+				if body:
+					sheep_collecting_energy = body
+					if body.get_stamina() >= 0:
+						cont_sheeps_with_stamina += 1
+						body.set_stamina(body.get_stamina()-20)
 				print('La oveja ', body.name, ' tiene ', body.get_stamina(), ' de stamina')
 			tile_erase_layer = i
 			tile_erase_position = tile_position
@@ -245,7 +248,8 @@ func make_something(delta):
 		if !sheeps_can_collect:
 			DialogueManager.start_dialog(["beeeh beeeeh"], speech_sound)
 		for body in current_bodies:
-			move_towards_random_point(body, delta)
+			if body:
+				move_towards_random_point(body, delta)
 
 func assign_destination(body):
 	# Si el cuerpo ya tiene un destino asignado, lo devolvemos
@@ -265,52 +269,54 @@ func assign_destination(body):
 
 func move_towards_random_point(body, delta):
 	# Obtiene el punto de destino asignado para este cuerpo
-	var destination = assign_destination(body)
-	var previous_position = body.global_position
-	
-	# Calcula la dirección hacia el punto asignado
-	var direction = (destination - body.global_position).normalized()
-	
-	# Calcula la velocidad
-	var velocity = direction * move_speed
-	
-	# Mueve el cuerpo usando move_and_slide
-	body.velocity = velocity
-	body.move_and_slide()
-	
-	# Verifica si el cuerpo ha llegado al punto asignado
-	if body.global_position.distance_to(destination) < 30:  # Ajusta este valor según sea necesario
-		body.velocity = Vector2.ZERO
-		#print(body.name, ' ha llegado a su destino')
-		current_bodies.erase(body)
-		body_destinations.erase(body)  # Elimina el destino asignado
-		if current_bodies.size() == 0:
-			what_sheeps_doing = 'nothing'
-	else:
-		can_draw = false
-		can_change_target = false
-		body_selected = false
-		#print('Distancia al destino: ', body.global_position.distance_to(destination))
-	
-	# ARREGLAR QUE CUANDO SE ESTAN DESTRABANDO AUN SALE EL DIALOGO DE MOVIMIENTO >:v
-	# Verifica si el cuerpo se ha movido
-	if body.global_position.distance_to(previous_position) < 1:  # Ajusta este valor según sea necesario
-		if body not in body_stuck_time:
+	if body:
+		var destination = assign_destination(body)
+		var previous_position = body.global_position
+		
+		# Calcula la dirección hacia el punto asignado
+		var direction = (destination - body.global_position).normalized()
+		
+		# Calcula la velocidad
+		var velocity = direction * move_speed
+		
+		# Mueve el cuerpo usando move_and_slide
+		body.velocity = velocity
+		body.move_and_slide()
+		
+		# Verifica si el cuerpo ha llegado al punto asignado
+		if body.global_position.distance_to(destination) < 30:  # Ajusta este valor según sea necesario
+			body.velocity = Vector2.ZERO
+			#print(body.name, ' ha llegado a su destino')
+			current_bodies.erase(body)
+			body_destinations.erase(body)  # Elimina el destino asignado
+			if current_bodies.size() == 0:
+				what_sheeps_doing = 'nothing'
+		else:
+			can_draw = false
+			can_change_target = false
+			body_selected = false
+			#print('Distancia al destino: ', body.global_position.distance_to(destination))
+		
+		# ARREGLAR QUE CUANDO SE ESTAN DESTRABANDO AUN SALE EL DIALOGO DE MOVIMIENTO >:v
+		# Verifica si el cuerpo se ha movido
+		if body.global_position.distance_to(previous_position) < 1:  # Ajusta este valor según sea necesario
+			if body not in body_stuck_time:
+				body_stuck_time[body] = 0
+			body_stuck_time[body] += delta
+			if body_stuck_time[body] > stuck_timeout:
+				unstuck_body(body)
+		else:
 			body_stuck_time[body] = 0
-		body_stuck_time[body] += delta
-		if body_stuck_time[body] > stuck_timeout:
-			unstuck_body(body)
-	else:
-		body_stuck_time[body] = 0
 
 func unstuck_body(body):
-	print(body.name, " está atascado. Reubicando...")
-	# Reasigna un nuevo destino
-	body_destinations.erase(body)
-	var new_destination = assign_destination(body)
-	# Opcionalmente, mueve el cuerpo a una nueva posición inicial
-	body.global_position = target_position + Vector2(randf_range(-target_radius, target_radius), randf_range(-target_radius, target_radius))
-	body_stuck_time[body] = 0
+	if body:
+		print(body.name, " está atascado. Reubicando...")
+		# Reasigna un nuevo destino
+		body_destinations.erase(body)
+		var new_destination = assign_destination(body)
+		# Opcionalmente, mueve el cuerpo a una nueva posición inicial
+		body.global_position = target_position + Vector2(randf_range(-target_radius, target_radius), randf_range(-target_radius, target_radius))
+		body_stuck_time[body] = 0
 
 var dash_length = 10  # Longitud de cada segmento de la línea punteada
 var gap_length = 5    # Longitud del espacio entre segmentos
@@ -333,6 +339,13 @@ func _on_body_exited(body):
 
 func _on_canvas_modulate_a_mimir():
 	get_tree().paused = true
+	can_change_target = false
+	can_collect_energy = false
+	can_draw = false
+	can_make_something = false
+	what_sheeps_doing = 'nothing'
+	
+	
 	var ap: AnimationPlayer = $"../CanvasLayer/FadeAnimation/AnimationPlayer"
 	ap.play("fade")
 	
