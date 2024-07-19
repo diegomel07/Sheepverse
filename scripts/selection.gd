@@ -52,7 +52,7 @@ func restore_stamina(sheep):
 				if slot.amount == 0:
 					break
 				slot.amount -= 1
-				sheep.stamina += 5
+				sheep.stamina += 20
 
 func _unhandled_input(event):
 	if event.is_action_pressed("eat"):
@@ -128,7 +128,8 @@ func finish_cloning():
 	player.set_energy(player.get_energy() - 10)
 	
 	var new_sheep = sheep.instantiate()
-	new_sheep.global_position = Vector2(6, 6)
+	sheep.set_stamina(0)  
+	new_sheep.global_position = Vector2(6 * 32, 6 * 32)
 	print("clonada")
 	%sheeps.add_child(new_sheep)
 	
@@ -137,8 +138,10 @@ func finish_cloning():
 func _process(delta):
 	if sheeps.size() > 50:
 		print('ganaste')
+	if sheeps.size() == 0:
+		print('perdiste')
 	
-	if on_machine and player.get_energy() >= 10 and not is_cloning:
+	if on_machine and player.get_energy() >= 10 and not is_cloning and sheep_cloning:
 		tile_map.erase_cell(tile_erase_layer, tile_erase_position)
 		start_cloning()
 		
@@ -226,7 +229,7 @@ func check_tile():
 			for body in current_bodies:
 				if body:
 					sheep_collecting_energy = body
-					if body.get_stamina() >= 0:
+					if body and body.get_stamina() >= 0:
 						cont_sheeps_with_stamina += 1
 						body.set_stamina(body.get_stamina()-20)
 				print('La oveja ', body.name, ' tiene ', body.get_stamina(), ' de stamina')

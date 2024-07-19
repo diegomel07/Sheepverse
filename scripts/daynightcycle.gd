@@ -15,7 +15,7 @@ signal a_mimir()
 
 @export var gradient_texture:GradientTexture1D
 @export var INGAME_SPEED = 2
-@export var INITIAL_HOUR = 17:
+@export var INITIAL_HOUR = 7:
 	set(h):
 		INITIAL_HOUR = h
 		time = INGAME_TO_REAL_MINUTE_DURATION * MINUTES_PER_HOUR * INITIAL_HOUR
