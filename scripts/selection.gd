@@ -130,7 +130,7 @@ func finish_cloning():
 	
 	
 	var new_sheep = sheep.instantiate()
-	new_sheep.global_position = Vector2(0, 0)
+	new_sheep.global_position = Vector2(6, 6)
 	print("clonada")
 	%sheeps.add_child(new_sheep)
 	
