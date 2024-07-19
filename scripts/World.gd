@@ -1,6 +1,8 @@
 extends Node2D
 
 @export var noiseTexture : NoiseTexture2D
+#@onready var loadingScreen = preload("res://Scenes/load_screen.tscn")
+
 var noise : Noise
 var tilemap : TileMap
 var tileId = 0
@@ -28,6 +30,7 @@ func _ready():
 	generateTerrain()
 
 func _process(_delta):
+	print("jejej")
 	pass
 
 func createMatrix():
