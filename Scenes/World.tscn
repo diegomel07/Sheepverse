@@ -1,11 +1,11 @@
 [gd_scene load_steps=12 format=3 uid="uid://by2ktrx18b768"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_3gy3t"]
-[ext_resource type="PackedScene" uid="uid://dabtg02t6sq0s" path="res://scenes/Player.tscn" id="3_54r5s"]
+[ext_resource type="PackedScene" uid="uid://dabtg02t6sq0s" path="res://Scenes/Player.tscn" id="3_54r5s"]
 [ext_resource type="Texture2D" uid="uid://dnil7lnql17hp" path="res://assets/tiles/tiles.png" id="3_luefk"]
-[ext_resource type="PackedScene" uid="uid://dalrerbbp32nk" path="res://scenes/sheep.tscn" id="4_6rwpb"]
-[ext_resource type="PackedScene" uid="uid://dlbc4foeijfsx" path="res://scenes/selection.tscn" id="5_x524r"]
-[ext_resource type="PackedScene" uid="uid://ygarkdl44isq" path="res://scenes/inventory.tscn" id="6_j181l"]
+[ext_resource type="PackedScene" uid="uid://dalrerbbp32nk" path="res://Scenes/sheep.tscn" id="4_6rwpb"]
+[ext_resource type="PackedScene" uid="uid://dlbc4foeijfsx" path="res://Scenes/selection.tscn" id="5_x524r"]
+[ext_resource type="PackedScene" uid="uid://ygarkdl44isq" path="res://Scenes/inventory.tscn" id="6_j181l"]
 [ext_resource type="Script" path="res://scripts/CanvasLayer.gd" id="6_pwnb1"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_x25q5"]
@@ -27,7 +27,7 @@ texture_region_size = Vector2i(32, 32)
 0:2/0 = 0
 0:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:2/0/physics_layer_0/angular_velocity = 0.0
-0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, -11.9055, -21.4299, -3.75, -23.875, 7, -24.125, 14.625, -21.125, 18.5, -19.625, 22.3636, -17.4814, 23, -12.625, 23.5, -3.5, 22.375, 7.75, 27.375, 16.375, 31.5, 21.625, 31.625, 24.625, 30.2288, 28.1075, 27.125, 28.125, 21.875, 28.125, 18.208, 28.9914, 12.7279, 28.9914, 8.625, 29.375, 3.71231, 29.1682, 0.353554, 27.7539, -4.24264, 27.0468, -7.24784, 27.9307, -18.125, 26.125, -22.8042, 25.1023, -28, 22, -27.875, 18, -25.375, 15.875, -25.125, 11, -19.375, 7.5)
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, -11.9055, -21.4299, -3.75, -23.875, 7, -24.125, 14.625, -21.125, 18.5, -19.625, 22.3636, -17.4814, 23, -12.625, 23.5, -3.5, 22.375, 7.75, 27.375, 16.375, 31.5, 21.625, 31.625, 24.625, 28, 24, 27.125, 28.125, 21.875, 28.125, 18.75, 26.375, 12.75, 26.75, 8.625, 29.375, 2.5, 24.125, -1, 21.5, -5.5, 21.5, -6.5, 28.625, -18.125, 26.125, -20.125, 21.5, -28, 22, -27.875, 18, -25.375, 15.875, -25.125, 11, -19.375, 7.5)
 0:2/0/custom_data_0 = "wood"
 0:4/size_in_atlas = Vector2i(2, 2)
 0:4/0 = 0
@@ -65,10 +65,6 @@ texture_region_size = Vector2i(32, 32)
 2:7/0 = 0
 2:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:7/0/physics_layer_0/angular_velocity = 0.0
-5:0/size_in_atlas = Vector2i(2, 2)
-5:0/0 = 0
-5:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
-5:0/0/physics_layer_0/angular_velocity = 0.0
 
 [sub_resource type="TileSet" id="TileSet_1i4sm"]
 tile_size = Vector2i(32, 32)
@@ -92,10 +88,22 @@ layer_1/tile_data = PackedInt32Array()
 
 [node name="Player" parent="." instance=ExtResource("3_54r5s")]
 unique_name_in_owner = true
-position = Vector2(186, 199)
+position = Vector2(1618, 917)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(2, 2)
+
+[node name="sheep" parent="." instance=ExtResource("4_6rwpb")]
+position = Vector2(1412, 861)
+
+[node name="sheep2" parent="." instance=ExtResource("4_6rwpb")]
+position = Vector2(1478, 917)
+
+[node name="sheep3" parent="." instance=ExtResource("4_6rwpb")]
+position = Vector2(1523, 781)
+
+[node name="Selection" parent="." instance=ExtResource("5_x524r")]
+position = Vector2(0, -5)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 process_mode = 3
@@ -113,21 +121,6 @@ offset_right = 174.5
 offset_bottom = 139.5
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Selection" parent="." instance=ExtResource("5_x524r")]
-position = Vector2(896, 416)
-
-[node name="sheeps" type="Node2D" parent="."]
-unique_name_in_owner = true
-
-[node name="sheep" parent="sheeps" instance=ExtResource("4_6rwpb")]
-position = Vector2(-20, 143)
-
-[node name="sheep2" parent="sheeps" instance=ExtResource("4_6rwpb")]
-position = Vector2(46, 199)
-
-[node name="sheep3" parent="sheeps" instance=ExtResource("4_6rwpb")]
-position = Vector2(91, 63)
 
 [connection signal="closed" from="CanvasLayer/inventory" to="." method="_on_inventory_closed"]
 [connection signal="opened" from="CanvasLayer/inventory" to="." method="_on_inventory_opened"]

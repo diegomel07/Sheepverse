@@ -2,11 +2,13 @@ extends Area2D
 
 @onready var tile_map = %TileMap
 @onready var collecting_animation = $Collecting_animation
-@onready var player = %Player
-@onready var speech_sound = preload("res://assets/sounds/meeeeeh.wav")
-@onready var speech_sound2 = preload("res://assets/sounds/click.wav")
 @onready var inventory: Inventory = preload("res://inventory/items/player_inventory.tres")
 @onready var sheeps = %sheeps.get_children()
+@onready var collecting_energy_animation = $Collecting_energy_animation
+@onready var player = %Player
+@onready var sheep = preload("res://Scenes/sheep.tscn")
+@onready var speech_sound = preload("res://assets/sounds/meeeeeh.wav")
+@onready var speech_sound2 = preload("res://assets/sounds/click.wav")
 
 
 
@@ -33,7 +35,8 @@ var tile_erase_layer: int
 var tile_erase_position: Vector2
 var collecting_type: String
 var cont_sheeps_with_stamina: int
-
+var can_collect_energy = false
+var on_machine = false
 
 func _ready():
 	polygon = Polygon2D.new()
@@ -102,29 +105,46 @@ func update_polygon():
 	# Forzar la actualización de la forma de colisión
 	collision_polygon.disabled = true
 	collision_polygon.disabled = false
+	
 
 
 func _process(delta):
 	# Collecting
+	if on_machine:
+	#colocar
+		var new_sheep = sheep.instantiate()
+		new_sheep.global_position = Vector2(0, 0)
+		print("clonada")
+		add_child(new_sheep)
 	if what_sheeps_doing == 'nothing' and sheeps_can_collect:
-		collecting_animation.visible = true
-		collecting_animation.global_position = target_position
-		collecting_animation.get_node("AnimatedSprite2D").play('collecting')
+		if can_collect_energy:
+			collecting_energy_animation.visible = true
+			collecting_energy_animation.global_position = target_position
+			tile_map.erase_cell(tile_erase_layer, tile_erase_position)
+			collecting_energy_animation.get_node("AnimatedSprite2D").play('default')
+		else:
+			collecting_animation.visible = true
+			collecting_animation.global_position = target_position
+			collecting_animation.get_node("AnimatedSprite2D").play('collecting')
 		can_draw = false
 		can_change_target = false
 		can_make_something = false
 		#print('Collecting')
 		time_collecting += delta
-		#print(time_collecting)
 		
 		if time_collecting >= collect_timeout:
-			collecting_animation.visible = false
-			collecting_animation.get_node("AnimatedSprite2D").stop()
-			tile_map.erase_cell(tile_erase_layer, tile_erase_position)
+			if can_collect_energy:
+				collecting_energy_animation.visible = false
+				collecting_energy_animation.get_node("AnimatedSprite2D").stop()
+			else : 
+				collecting_animation.visible = false
+				collecting_animation.get_node("AnimatedSprite2D").stop()
+				tile_map.erase_cell(tile_erase_layer, tile_erase_position)
 			can_draw = true
 			can_change_target = true
 			can_make_something = true
 			sheeps_can_collect = false
+			can_collect_energy = false
 			collect_timeout = 5
 			
 			# añadiendo la cantidad de objectos recolectados
@@ -134,6 +154,10 @@ func _process(delta):
 				player.set_wood(player.get_wood()+4)
 			elif collecting_type == 'grass':
 				player.set_grass(player.get_grass()+4)
+			elif collecting_type == 'energy':
+				tile_map.set_cell(1,tile_erase_position, 0,Vector2(5,0))
+				print("jejeje")
+				#player.set_energy(player.get_energy()+4)
 	
 	# Moving
 	if can_make_something:
@@ -161,7 +185,10 @@ func check_tile():
 		if tile_type == 'terrain':
 			sheeps_can_collect = false
 			what_sheeps_doing = 'walking'
-		if tile_type == 'rock' or tile_type == 'wood' or tile_type == "grass":
+		if tile_type == "clone_machine":
+			DialogueManager.start_dialog(["CLOOOOOONNN"], speech_sound)
+			on_machine = true
+		if tile_type == 'rock' or tile_type == 'wood' or tile_type == "grass" or tile_type == "energy":
 			DialogueManager.start_dialog(["recolecten perras"], speech_sound)
 			for body in current_bodies:
 				if body.get_stamina() >= 0:
@@ -175,6 +202,11 @@ func check_tile():
 			if cont_sheeps_with_stamina > 0:
 				collecting_type = tile_type
 				sheeps_can_collect = true
+				if tile_type == "energy":
+					can_collect_energy= true
+					
+
+
 		#print("Clic en tile en posición: ", tile_position, ' Tipo: ', tile_type)
 
 var time_collecting = 0
