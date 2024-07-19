@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4peaw71bvfry"]
+
+[ext_resource type="Script" path="res://scripts/loading_screen.gd" id="1_5dt8c"]
+[ext_resource type="Texture2D" uid="uid://dy4gre2al23ge" path="res://assets/loading.png" id="1_q7oag"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_5dt8c")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1154.0
+offset_bottom = 643.0
+texture = ExtResource("1_q7oag")
