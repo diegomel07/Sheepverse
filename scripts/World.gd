@@ -80,7 +80,7 @@ func getZone(value):
 func areaAvailable(startX, startY, value):
 	for x in range(startX-2, startX + 2):
 		for y in range(startY-2, startY + 2):
-			if (x < 20 and x > 0) and (y < 20 and y > 0) :
+			if (x < 17 and x > 0) and (y < 16 and y > 0) :
 				return false
 			if x >= width or y >= height:
 				return false 

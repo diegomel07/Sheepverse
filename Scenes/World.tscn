@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://by2ktrx18b768"]
+[gd_scene load_steps=19 format=3 uid="uid://by2ktrx18b768"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_3gy3t"]
 [ext_resource type="PackedScene" uid="uid://dabtg02t6sq0s" path="res://scenes/Player.tscn" id="3_54r5s"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://scripts/gui_daytime.gd" id="7_ea4c8"]
 [ext_resource type="Script" path="res://scripts/daynightcycle.gd" id="8_q0unq"]
 [ext_resource type="Texture2D" uid="uid://dhs5qnn5oblyk" path="res://assets/tiles/daynightcycle-gradient-texture.tres" id="9_jo0ii"]
+[ext_resource type="Texture2D" uid="uid://ctyg6jtqljm2n" path="res://assets/tiles/black-background.jpg" id="11_06nyr"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_x25q5"]
 frequency = 0.072
@@ -82,9 +83,11 @@ texture_region_size = Vector2i(32, 32)
 2:1/0 = 0
 2:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:1/0/physics_layer_0/angular_velocity = 0.0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -2.75, 16, -3, 16, 6, 4.75, 6.25, 5.25, 16, -5.5, 16)
 2:2/0 = 0
 2:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:2/0/physics_layer_0/angular_velocity = 0.0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5.75, -16, 6.5, -16, 6.75, -3, 16, -3, 16, 6.25, 6.5, 6.25, 6, 16, -6, 16)
 3:2/0 = 0
 3:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:2/0/physics_layer_0/angular_velocity = 0.0
@@ -94,27 +97,33 @@ texture_region_size = Vector2i(32, 32)
 2:3/0 = 0
 2:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:3/0/physics_layer_0/angular_velocity = 0.0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(4.25, -16, 4, -2.75, 16, -2.5, 16, 5.75, -4, 5.5, -4, -16)
 2:4/0 = 0
 2:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:4/0/physics_layer_0/angular_velocity = 0.0
 3:4/0 = 0
 3:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:4/0/physics_layer_0/angular_velocity = 0.0
+3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -3.25, 16, -3, 16, 6.25, -16, 6)
 4:4/0 = 0
 4:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 4:4/0/physics_layer_0/angular_velocity = 0.0
+4:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5.25, -16, 5, -16, 5.25, 16, -5.25, 16)
 4:3/0 = 0
 4:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 4:3/0/physics_layer_0/angular_velocity = 0.0
+4:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -2.75, -4, -3, -3.75, -16, 4, -16, 4.25, 5.25, -16, 5.75)
 4:2/0 = 0
 4:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 4:2/0/physics_layer_0/angular_velocity = 0.0
 3:1/0 = 0
 3:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:1/0/physics_layer_0/angular_velocity = 0.0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -2.75, 16, -2.75, 16, 6.54803, 5.15905, 6.15118, 5.15905, 16, -4.96063, 16, -4.7622, 6.15118, -16, 6.3496)
 4:1/0 = 0
 4:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 4:1/0/physics_layer_0/angular_velocity = 0.0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -2.75, 5.25, -2.5, 5.25, 16, -5, 16, -4.75, 6.5, -16, 6.25)
 
 [sub_resource type="TileSet" id="TileSet_1i4sm"]
 tile_size = Vector2i(32, 32)
@@ -122,6 +131,43 @@ physics_layer_0/collision_layer = 1
 custom_data_layer_0/name = "type"
 custom_data_layer_0/type = 4
 sources/0 = SubResource("TileSetAtlasSource_7t8im")
+
+[sub_resource type="Animation" id="Animation_jpbyi"]
+resource_name = "fade"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_f7dqu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q0lae"]
+_data = {
+"RESET": SubResource("Animation_f7dqu"),
+"fade": SubResource("Animation_jpbyi")
+}
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_3gy3t")
@@ -133,14 +179,22 @@ tile_set = SubResource("TileSet_1i4sm")
 format = 2
 layer_0/name = "floor"
 layer_1/name = "objects"
-layer_1/tile_data = PackedInt32Array(0, 131072, 1, 65536, 131072, 1, 131072, 131072, 1, 196608, 131072, 1, 262144, 131072, 1, 327680, 131072, 1, 393216, 131072, 1, 458752, 131072, 1, 524288, 131072, 1, 589824, 131072, 1, 655360, 131072, 1, 720896, 131072, 1, 786432, 131072, 1, 851968, 131072, 1, 917504, 131072, 1, 983040, 131072, 1, 1048576, 131072, 1, 1114112, 131072, 1, 1179648, 131072, 1, 1245184, 131072, 1, 1310720, 131072, 1, 1310721, 131072, 1, 1310722, 131072, 1, 1310723, 131072, 1, 1310724, 131072, 1, 1310725, 131072, 1, 1310726, 131072, 1, 1310727, 131072, 1, 1310728, 131072, 1, 1310729, 131072, 1, 1310730, 131072, 1, 1310731, 131072, 1, 1310732, 131072, 1, 1310733, 131072, 1, 1310734, 131072, 1, 1310735, 131072, 1, 1310736, 131072, 1, 1310737, 131072, 1, 1310738, 131072, 1, 1310739, 131072, 1, 1310740, 131072, 1, 1245204, 131072, 1, 1179668, 131072, 1, 1114132, 131072, 1, 1048596, 131072, 1, 983060, 131072, 1, 917524, 131072, 1, 851988, 131072, 1, 786452, 131072, 1, 393236, 131072, 1, 327700, 131072, 1, 262164, 131072, 1, 196628, 131072, 1, 131092, 131072, 1, 65556, 131072, 1, 20, 131072, 1, 19, 131072, 1, 18, 131072, 1, 17, 131072, 1, 16, 131072, 1, 15, 131072, 1, 14, 131072, 1, 13, 131072, 1, 12, 131072, 1, 11, 131072, 1, 10, 131072, 1, 9, 131072, 1, 8, 131072, 1, 7, 131072, 1, 6, 131072, 1, 5, 131072, 1, 4, 131072, 1, 3, 131072, 1, 2, 131072, 1, 1, 131072, 1, 458772, 131072, 1, 524308, 131072, 1, 589844, 131072, 1, 655380, 131072, 1, 720916, 131072, 1)
+layer_1/tile_data = PackedInt32Array(0, 131072, 1, 65536, 262144, 4, 131072, 262144, 4, 196608, 262144, 4, 262144, 262144, 4, 327680, 262144, 4, 393216, 262144, 4, 458752, 262144, 4, 524288, 262144, 4, 589824, 262144, 4, 655360, 262144, 4, 720896, 262144, 4, 786432, 131072, 3, 7, 262144, 1, 6, 196608, 4, 5, 196608, 4, 3, 196608, 4, 2, 196608, 4, 1, 196608, 4, 458762, 131072, 3, 393226, 262144, 4, 327690, 262144, 1, 851970, 131072, 3, 851971, 196608, 4, 851972, 196608, 4, 851973, 196608, 4, 917510, 131072, 3, 917511, 196608, 4, 917512, 196608, 4, 917513, 196608, 4, 917514, 196608, 4, 917515, 196608, 4, 917516, 196608, 4, 983053, 131072, 3, 983054, 196608, 4, 983055, 196608, 4, 983056, 262144, 3, 917520, 262144, 4, 851984, 262144, 4, 786448, 262144, 4, 720912, 262144, 4, 655376, 262144, 4, 589840, 262144, 1, 589839, 131072, 3, 524303, 262144, 1, 524300, 196608, 4, 524299, 131072, 3, 327689, 131072, 3, 262153, 262144, 1, 196616, 262144, 4, 131080, 262144, 1, 131079, 131072, 3, 65543, 262144, 4, 786433, 196608, 4, 786434, 262144, 1, 851974, 262144, 1, 917517, 262144, 1, 458763, 262144, 1, 262152, 131072, 3, 4, 196608, 4, 262148, 327680, 2)
 
 [node name="Player" parent="." instance=ExtResource("3_54r5s")]
 unique_name_in_owner = true
-position = Vector2(272, 233)
+position = Vector2(664, 322)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(0, -2)
 zoom = Vector2(1.5, 1.5)
+limit_left = 0
+limit_top = 0
+limit_right = 1000
+limit_bottom = 1000
+limit_smoothed = true
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
 
 [node name="Selection" parent="." instance=ExtResource("5_x524r")]
 position = Vector2(0, -5)
@@ -173,17 +227,27 @@ offset_bottom = 23.0
 script = ExtResource("7_ea4c8")
 metadata/_edit_use_anchors_ = true
 
+[node name="FadeAnimation" type="Sprite2D" parent="CanvasLayer"]
+self_modulate = Color(0, 0, 0, 0)
+position = Vector2(491, 262)
+texture = ExtResource("11_06nyr")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/FadeAnimation"]
+libraries = {
+"": SubResource("AnimationLibrary_q0lae")
+}
+
 [node name="sheeps" type="Node2D" parent="."]
 unique_name_in_owner = true
 
 [node name="sheep" parent="sheeps" instance=ExtResource("4_6rwpb")]
-position = Vector2(66, 177)
+position = Vector2(658, 199)
 
 [node name="sheep2" parent="sheeps" instance=ExtResource("4_6rwpb")]
-position = Vector2(132, 233)
+position = Vector2(724, 255)
 
 [node name="sheep3" parent="sheeps" instance=ExtResource("4_6rwpb")]
-position = Vector2(177, 97)
+position = Vector2(769, 119)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.133333, 0.14902, 0.258824, 1)

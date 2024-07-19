@@ -243,7 +243,7 @@ func make_something(delta):
 	# move towards the click
 	if what_sheeps_doing == "walking":
 		if !sheeps_can_collect:
-			DialogueManager.start_dialog(["caminen perras"], speech_sound)
+			DialogueManager.start_dialog(["beeeh beeeeh"], speech_sound)
 		for body in current_bodies:
 			move_towards_random_point(body, delta)
 
@@ -332,5 +332,22 @@ func _on_body_exited(body):
 
 
 func _on_canvas_modulate_a_mimir():
+	get_tree().paused = true
+	var ap: AnimationPlayer = $"../CanvasLayer/FadeAnimation/AnimationPlayer"
+	ap.play("fade")
+	
+	# Esperamos hasta que la animación pase los 2 segundos
+	await get_tree().create_timer(2.0).timeout
+	
+	# Verificamos y eliminamos las ovejas fuera de los límites
+	var sheep_position
 	for sheep in sheeps:
-		print(sheep.name)
+		sheep_position = tile_map.local_to_map(tile_map.to_local(sheep.global_position))
+		print(sheep_position)
+		if (sheep_position.x > 17 or sheep_position.x < 0) or (sheep_position.y > 16 or sheep_position.y < 0):
+			sheep.queue_free()
+	
+	# Esperamos a que termine la animación completa
+	await ap.animation_finished
+	
+	get_tree().paused = false
