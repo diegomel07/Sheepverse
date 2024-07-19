@@ -9,10 +9,10 @@ var height = 1000
 var matrix
 
 var tileTypes = {
-	"ocean": {"position": Vector2i(2, 5), "tileId": 0},
+	"ocean": {"position": Vector2i(2, 7), "tileId": 0},
 	"sand": {"position": Vector2i(4, 5), "tileId": 0},
 	"land": {"position": Vector2i(3, 5), "tileId": 0},
-	"darkLand": {"position": Vector2i(3, 0), "tileId": 0},}
+	"darkLand": {"position": Vector2i(0, 6), "tileId": 0},}
 	
 var tileObjects = {
 	"rock": {"position": Vector2i(0, 0), "tileId": 0},
@@ -110,3 +110,11 @@ func generateTerrain():
 						#var vector = tileTypes[cell["tile"]]["position"]
 						#tilemap.set_cell(0,Vector2(x+i,y+j) ,tileTypes[cell["tile"]]["tileId"], Vector2i(vector.x+i,vector.y+j ))
 						#matrix [x+i][y+j]["done"] = true
+
+
+func _on_inventory_closed():
+	get_tree().paused = false
+
+
+func _on_inventory_opened():
+	get_tree().paused = true

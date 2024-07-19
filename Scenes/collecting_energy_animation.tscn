@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://dbu8xy1710lh2"]
+
+[ext_resource type="Texture2D" uid="uid://blmwbkqvhgsw1" path="res://Art/Player/MainSheep.png" id="2_en47a"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7wb8f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_en47a")
+}],
+"loop": false,
+"name": &"default",
+"speed": 60.0
+}]
+
+[node name="Collecting_energy_animation" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(136.875, 51.125)
+scale = Vector2(0.366519, 0.401436)
+sprite_frames = SubResource("SpriteFrames_7wb8f")
+frame_progress = 0.452607
+speed_scale = 2.0

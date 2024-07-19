@@ -1,9 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://dlbc4foeijfsx"]
+[gd_scene load_steps=4 format=3 uid="uid://dlbc4foeijfsx"]
 
 [ext_resource type="Script" path="res://scripts/selection.gd" id="1_dgk11"]
+[ext_resource type="PackedScene" uid="uid://dbu8xy1710lh2" path="res://Scenes/collecting_energy_animation.tscn" id="2_fdky6"]
+[ext_resource type="PackedScene" uid="uid://ciawa6gg05861" path="res://Scenes/collecting_animation.tscn" id="2_g7fki"]
 
 [node name="Selection" type="Area2D"]
 script = ExtResource("1_dgk11")
+
+[node name="Collecting_energy_animation" parent="." instance=ExtResource("2_fdky6")]
+visible = false
+
+[node name="Collecting_animation" parent="." instance=ExtResource("2_g7fki")]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
