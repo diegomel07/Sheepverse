@@ -5,6 +5,9 @@ extends Area2D
 @onready var player = %Player
 @onready var speech_sound = preload("res://assets/sounds/meeeeeh.wav")
 @onready var speech_sound2 = preload("res://assets/sounds/click.wav")
+@onready var inventory: Inventory = preload("res://inventory/items/player_inventory.tres")
+@onready var sheeps = %sheeps.get_children()
+
 
 
 var polygon: Polygon2D
@@ -39,9 +42,32 @@ func _ready():
 	collision_polygon = CollisionPolygon2D.new()
 	add_child(collision_polygon)
 
+func restore_stamina(sheep):
+	for slot in inventory.slots:
+		if slot.item and slot.item.name == 'grass':
+			while sheep.stamina <= 50:
+				if slot.amount == 0:
+					break
+				slot.amount -= 1
+				sheep.stamina += 5
 
 func _unhandled_input(event):
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+	if event.is_action_pressed("eat"):
+		for sheep in sheeps:
+			# si la oveja tiene la stamina menor a 50 recuperar, cada pasto recupera 5
+			if sheep.stamina < 50:
+				restore_stamina(sheep)
+	
+	if event.is_action_pressed("create_hamster"):
+		for slot in inventory.slots:
+			if slot.item and slot.item.name == "hamster" and slot.amount > 0:
+				var click_position = get_global_mouse_position()
+				# Convierte la posición global a coordenadas de tile
+				var tile_position = tile_map.local_to_map(tile_map.to_local(click_position))
+				tile_map.set_cell(1, tile_position, 0, Vector2(5, 0))
+				slot.amount -= 1
+	
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			can_make_something = true
 			if can_change_target:
@@ -76,7 +102,7 @@ func update_polygon():
 	# Forzar la actualización de la forma de colisión
 	collision_polygon.disabled = true
 	collision_polygon.disabled = false
-	
+
 
 func _process(delta):
 	# Collecting
@@ -89,7 +115,7 @@ func _process(delta):
 		can_make_something = false
 		#print('Collecting')
 		time_collecting += delta
-		print(time_collecting)
+		#print(time_collecting)
 		
 		if time_collecting >= collect_timeout:
 			collecting_animation.visible = false
@@ -140,8 +166,8 @@ func check_tile():
 			for body in current_bodies:
 				if body.get_stamina() >= 0:
 					cont_sheeps_with_stamina += 1
-				body.set_stamina(body.get_stamina()-20)
-				#print('La oveja ', body.name, ' tiene ', body.get_stamina(), ' de stamina')
+					body.set_stamina(body.get_stamina()-20)
+				print('La oveja ', body.name, ' tiene ', body.get_stamina(), ' de stamina')
 			tile_erase_layer = i
 			tile_erase_position = tile_position
 			time_collecting = 0
@@ -204,7 +230,8 @@ func move_towards_random_point(body, delta):
 		can_change_target = false
 		body_selected = false
 		#print('Distancia al destino: ', body.global_position.distance_to(destination))
-		
+	
+	# ARREGLAR QUE CUANDO SE ESTAN DESTRABANDO AUN SALE EL DIALOGO DE MOVIMIENTO >:v
 	# Verifica si el cuerpo se ha movido
 	if body.global_position.distance_to(previous_position) < 1:  # Ajusta este valor según sea necesario
 		if body not in body_stuck_time:

@@ -36,6 +36,7 @@ func _ready():
 	connect_slots()
 	inventory.updated.connect(update)
 	update()
+	
 
 func update():
 	for i in range(min(inventory.slots.size(), slots.size())):
@@ -48,6 +49,7 @@ func connect_slots():
 		slot.pressed.connect(callable)
 
 func open():
+	update()
 	visible = true
 	is_open = true
 	opened.emit()
@@ -68,6 +70,7 @@ func on_slot_clicked(slot):
 	elif slot.item_name == 'hamster':
 		put_material()
 		put_material(['rock'], 4)
+
 	
 	update()
 
@@ -121,5 +124,4 @@ func _on_crafting_button_pressed():
 			if slot.item:
 				if slot.item.name in my_materials:
 					slot.amount = my_materials[slot.item.name]
-	
 	update()
