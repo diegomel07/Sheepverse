@@ -1,7 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://c4peaw71bvfry"]
+[gd_scene load_steps=10 format=3 uid="uid://c4peaw71bvfry"]
 
 [ext_resource type="Script" path="res://scripts/loading_screen.gd" id="1_5dt8c"]
-[ext_resource type="Texture2D" uid="uid://dy4gre2al23ge" path="res://assets/loading.png" id="1_q7oag"]
+[ext_resource type="Texture2D" uid="uid://cj1nfnf1xeb5b" path="res://assets/cinematica/cinameteca1.png" id="2_hyv52"]
+[ext_resource type="Texture2D" uid="uid://c51ne12m7dcp6" path="res://assets/cinematica/cinameteca2.png" id="3_fwu3t"]
+[ext_resource type="Texture2D" uid="uid://bp6nam6xvtd4y" path="res://assets/cinematica/cinameteca3.png" id="4_vb71i"]
+[ext_resource type="Texture2D" uid="uid://cwxv8l5ats7fc" path="res://assets/cinematica/cinameteca4.png" id="5_2483n"]
+[ext_resource type="Texture2D" uid="uid://iqxdrnjr3kt3" path="res://assets/cinematica/cinameteca5.png" id="6_7kj3x"]
+[ext_resource type="Texture2D" uid="uid://crfdll6ntfthq" path="res://assets/cinematica/cinameteca6.png" id="7_sax62"]
+
+[sub_resource type="Animation" id="Animation_6cinu"]
+resource_name = "loading"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3ri11"]
+_data = {
+"loading": SubResource("Animation_6cinu")
+}
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -10,8 +23,31 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_5dt8c")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 1154.0
-offset_bottom = 643.0
-texture = ExtResource("1_q7oag")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3ri11")
+}
+
+[node name="Cinematica1" type="Sprite2D" parent="."]
+position = Vector2(640, 480)
+texture = ExtResource("2_hyv52")
+
+[node name="Cinematica2" type="Sprite2D" parent="."]
+position = Vector2(640, 480)
+texture = ExtResource("3_fwu3t")
+
+[node name="Cinematica3" type="Sprite2D" parent="."]
+position = Vector2(640, 480)
+texture = ExtResource("4_vb71i")
+
+[node name="Cinematica4" type="Sprite2D" parent="."]
+position = Vector2(640, 480)
+texture = ExtResource("5_2483n")
+
+[node name="Cinematica5" type="Sprite2D" parent="."]
+position = Vector2(640, 480)
+texture = ExtResource("6_7kj3x")
+
+[node name="Cinematica6" type="Sprite2D" parent="."]
+position = Vector2(640, 480)
+texture = ExtResource("7_sax62")
