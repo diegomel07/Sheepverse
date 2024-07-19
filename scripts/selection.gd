@@ -329,3 +329,8 @@ func _on_body_entered(body):
 
 func _on_body_exited(body):
 	pass
+
+
+func _on_canvas_modulate_a_mimir():
+	for sheep in sheeps:
+		print(sheep.name)

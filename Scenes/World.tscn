@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://by2ktrx18b768"]
+[gd_scene load_steps=15 format=3 uid="uid://by2ktrx18b768"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_3gy3t"]
 [ext_resource type="PackedScene" uid="uid://dabtg02t6sq0s" path="res://scenes/Player.tscn" id="3_54r5s"]
@@ -7,6 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://dlbc4foeijfsx" path="res://scenes/selection.tscn" id="5_x524r"]
 [ext_resource type="PackedScene" uid="uid://ygarkdl44isq" path="res://scenes/inventory.tscn" id="6_j181l"]
 [ext_resource type="Script" path="res://scripts/CanvasLayer.gd" id="6_pwnb1"]
+[ext_resource type="Script" path="res://scripts/gui_daytime.gd" id="7_ea4c8"]
+[ext_resource type="Script" path="res://scripts/daynightcycle.gd" id="8_q0unq"]
+[ext_resource type="Texture2D" uid="uid://dhs5qnn5oblyk" path="res://assets/tiles/daynightcycle-gradient-texture.tres" id="9_jo0ii"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_x25q5"]
 frequency = 0.072
@@ -76,6 +79,42 @@ texture_region_size = Vector2i(32, 32)
 5:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 5:2/0/physics_layer_0/angular_velocity = 0.0
 5:2/0/custom_data_0 = "clone_machine"
+2:1/0 = 0
+2:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:1/0/physics_layer_0/angular_velocity = 0.0
+2:2/0 = 0
+2:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:2/0/physics_layer_0/angular_velocity = 0.0
+3:2/0 = 0
+3:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:2/0/physics_layer_0/angular_velocity = 0.0
+3:3/0 = 0
+3:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:3/0/physics_layer_0/angular_velocity = 0.0
+2:3/0 = 0
+2:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:3/0/physics_layer_0/angular_velocity = 0.0
+2:4/0 = 0
+2:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:4/0/physics_layer_0/angular_velocity = 0.0
+3:4/0 = 0
+3:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:4/0/physics_layer_0/angular_velocity = 0.0
+4:4/0 = 0
+4:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:4/0/physics_layer_0/angular_velocity = 0.0
+4:3/0 = 0
+4:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:3/0/physics_layer_0/angular_velocity = 0.0
+4:2/0 = 0
+4:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:2/0/physics_layer_0/angular_velocity = 0.0
+3:1/0 = 0
+3:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:1/0/physics_layer_0/angular_velocity = 0.0
+4:1/0 = 0
+4:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:1/0/physics_layer_0/angular_velocity = 0.0
 
 [sub_resource type="TileSet" id="TileSet_1i4sm"]
 tile_size = Vector2i(32, 32)
@@ -90,16 +129,15 @@ noiseTexture = SubResource("NoiseTexture2D_0ybhi")
 
 [node name="TileMap" type="TileMap" parent="."]
 unique_name_in_owner = true
-position = Vector2(-1697, -1026)
 tile_set = SubResource("TileSet_1i4sm")
 format = 2
 layer_0/name = "floor"
 layer_1/name = "objects"
-layer_1/tile_data = PackedInt32Array(1900600, 327680, 2)
+layer_1/tile_data = PackedInt32Array(0, 131072, 1, 65536, 131072, 1, 131072, 131072, 1, 196608, 131072, 1, 262144, 131072, 1, 327680, 131072, 1, 393216, 131072, 1, 458752, 131072, 1, 524288, 131072, 1, 589824, 131072, 1, 655360, 131072, 1, 720896, 131072, 1, 786432, 131072, 1, 851968, 131072, 1, 917504, 131072, 1, 983040, 131072, 1, 1048576, 131072, 1, 1114112, 131072, 1, 1179648, 131072, 1, 1245184, 131072, 1, 1310720, 131072, 1, 1310721, 131072, 1, 1310722, 131072, 1, 1310723, 131072, 1, 1310724, 131072, 1, 1310725, 131072, 1, 1310726, 131072, 1, 1310727, 131072, 1, 1310728, 131072, 1, 1310729, 131072, 1, 1310730, 131072, 1, 1310731, 131072, 1, 1310732, 131072, 1, 1310733, 131072, 1, 1310734, 131072, 1, 1310735, 131072, 1, 1310736, 131072, 1, 1310737, 131072, 1, 1310738, 131072, 1, 1310739, 131072, 1, 1310740, 131072, 1, 1245204, 131072, 1, 1179668, 131072, 1, 1114132, 131072, 1, 1048596, 131072, 1, 983060, 131072, 1, 917524, 131072, 1, 851988, 131072, 1, 786452, 131072, 1, 393236, 131072, 1, 327700, 131072, 1, 262164, 131072, 1, 196628, 131072, 1, 131092, 131072, 1, 65556, 131072, 1, 20, 131072, 1, 19, 131072, 1, 18, 131072, 1, 17, 131072, 1, 16, 131072, 1, 15, 131072, 1, 14, 131072, 1, 13, 131072, 1, 12, 131072, 1, 11, 131072, 1, 10, 131072, 1, 9, 131072, 1, 8, 131072, 1, 7, 131072, 1, 6, 131072, 1, 5, 131072, 1, 4, 131072, 1, 3, 131072, 1, 2, 131072, 1, 1, 131072, 1, 458772, 131072, 1, 524308, 131072, 1, 589844, 131072, 1, 655380, 131072, 1, 720916, 131072, 1)
 
 [node name="Player" parent="." instance=ExtResource("3_54r5s")]
 unique_name_in_owner = true
-position = Vector2(-91, -95)
+position = Vector2(272, 233)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(1.5, 1.5)
@@ -116,6 +154,7 @@ process_mode = 3
 script = ExtResource("6_pwnb1")
 
 [node name="inventory" parent="CanvasLayer" instance=ExtResource("6_j181l")]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -128,17 +167,30 @@ offset_bottom = 139.5
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_right = 76.0
+offset_bottom = 23.0
+script = ExtResource("7_ea4c8")
+metadata/_edit_use_anchors_ = true
+
 [node name="sheeps" type="Node2D" parent="."]
 unique_name_in_owner = true
 
 [node name="sheep" parent="sheeps" instance=ExtResource("4_6rwpb")]
-position = Vector2(-297, -151)
+position = Vector2(66, 177)
 
 [node name="sheep2" parent="sheeps" instance=ExtResource("4_6rwpb")]
-position = Vector2(-231, -95)
+position = Vector2(132, 233)
 
 [node name="sheep3" parent="sheeps" instance=ExtResource("4_6rwpb")]
-position = Vector2(-186, -231)
+position = Vector2(177, 97)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.133333, 0.14902, 0.258824, 1)
+script = ExtResource("8_q0unq")
+gradient_texture = ExtResource("9_jo0ii")
 
 [connection signal="closed" from="CanvasLayer/inventory" to="." method="_on_inventory_closed"]
 [connection signal="opened" from="CanvasLayer/inventory" to="." method="_on_inventory_opened"]
+[connection signal="a_mimir" from="CanvasModulate" to="Selection" method="_on_canvas_modulate_a_mimir"]
+[connection signal="time_tick" from="CanvasModulate" to="CanvasLayer/Label" method="_on_canvas_modulate_time_tick"]

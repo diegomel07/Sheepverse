@@ -25,7 +25,6 @@ func _ready():
 	noise.seed = randi()
 	createMatrix()
 	createMap()
-	tilemap.set_cell(1,Vector2(5,5) ,0, Vector2i(0, 0))
 	generateTerrain()
 
 func _process(_delta):
@@ -81,6 +80,8 @@ func getZone(value):
 func areaAvailable(startX, startY, value):
 	for x in range(startX-2, startX + 2):
 		for y in range(startY-2, startY + 2):
+			if (x < 20 and x > 0) and (y < 20 and y > 0) :
+				return false
 			if x >= width or y >= height:
 				return false 
 			if  noise.get_noise_2d(x,y) < -0.1:

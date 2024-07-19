@@ -1,5 +1,6 @@
 extends Button
 
+
 @onready var background = $background
 @onready var item_sprite = $CenterContainer/Panel/item
 @onready var amount_label = $CenterContainer/Panel/Label
