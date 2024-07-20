@@ -149,6 +149,7 @@ region_rect = Rect2(10, 9, 75, 15)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0c6ms"]
 texture = ExtResource("11_l6wvc")
+region_rect = Rect2(8, 11, 78, 11)
 
 [sub_resource type="Animation" id="Animation_f7dqu"]
 length = 0.001
@@ -261,6 +262,7 @@ theme_override_icons/grabber_highlight = ExtResource("9_4skng")
 theme_override_styles/slider = SubResource("StyleBoxTexture_sh75p")
 theme_override_styles/grabber_area = SubResource("StyleBoxTexture_0c6ms")
 max_value = 1440.0
+value = 1000.0
 scrollable = false
 script = ExtResource("10_sercw")
 

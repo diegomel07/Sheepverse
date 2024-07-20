@@ -2,9 +2,14 @@ extends CharacterBody2D
 
 @onready var animated_sprite_2d = $AnimatedSprite2D
 var direction: Vector2
-var stamina: int = 50
+var stamina: int = 3
+@onready var progress_bar = $ProgressBar
+
+func _ready():
+	progress_bar.value = stamina
 
 func _process(delta):
+	progress_bar.value = stamina
 	if stamina <= 0:
 		$zzz.visible = true
 		$zzz.play("zzz")
@@ -31,6 +36,7 @@ func _physics_process(delta):
 		animated_sprite_2d.play("walk")
 
 func set_stamina(new_stamina):
+	$ProgressBar.value = stamina
 	stamina = new_stamina
 
 func get_stamina():

@@ -38,6 +38,7 @@ var on_machine = false
 var sheep_collecting_energy
 var sheep_cloning
 var you_lose
+var your_food = 0
 
 func _ready():
 	var you_lose = false
@@ -50,11 +51,11 @@ func _ready():
 func restore_stamina(sheep):
 	for slot in inventory.slots:
 		if slot.item and slot.item.name == 'grass':
-			while sheep.stamina <= 50:
-				if slot.amount == 0:
+			while sheep.stamina < 3:
+				if slot.amount == 0 or sheep.stamina == 3:
 					break
 				slot.amount -= 1
-				sheep.stamina += 20
+				sheep.stamina += 1
 
 func _unhandled_input(event):
 	if you_lose and event.is_pressed():
@@ -62,7 +63,7 @@ func _unhandled_input(event):
 	if event.is_action_pressed("eat"):
 		for sheep in sheeps:
 			# si la oveja tiene la stamina menor a 50 recuperar, cada pasto recupera 5
-			if sheep.stamina < 50:
+			if sheep.stamina < 3:
 				restore_stamina(sheep)
 	
 	if event.is_action_pressed("create_hamster"):
@@ -142,6 +143,8 @@ func finish_cloning():
 var cont_sheeps_0_stamina = 0
 func _process(delta):
 	cont_sheeps_0_stamina = 0
+	your_food = 0
+	
 	sheeps = %sheeps.get_children()
 	if sheeps.size() > 50:
 		$"../CanvasLayer/goodending".visible = true
@@ -151,10 +154,14 @@ func _process(delta):
 		you_lose = true
 	
 	for sheep in sheeps:
-		if sheep.get_stamina() < 0:
+		if sheep.get_stamina() <= 0:
 			cont_sheeps_0_stamina += 1
 	
-	if cont_sheeps_0_stamina == sheeps.size():
+	for slot in inventory.slots:
+		if slot.item and slot.item.name == 'grass':
+			your_food += 1
+
+	if your_food == 0 and cont_sheeps_0_stamina == sheeps.size():
 		$"../CanvasLayer/badending".visible = true
 		you_lose = true
 	
@@ -242,13 +249,13 @@ func check_tile():
 			tile_erase_position = tile_position
 			on_machine = true
 		if tile_type == 'rock' or tile_type == 'wood' or tile_type == "grass" or tile_type == "energy":
-			DialogueManager.start_dialog(["recolecten perras"], speech_sound)
+			DialogueManager.start_dialog(["Recolecten!"], speech_sound)
 			for body in current_bodies:
 				if body:
 					sheep_collecting_energy = body
 					if body and body.get_stamina() >= 0:
 						cont_sheeps_with_stamina += 1
-						body.set_stamina(body.get_stamina()-20)
+						body.set_stamina(body.get_stamina()-1)
 				print('La oveja ', body.name, ' tiene ', body.get_stamina(), ' de stamina')
 			tile_erase_layer = i
 			tile_erase_position = tile_position
@@ -266,7 +273,7 @@ func make_something(delta):
 	# move towards the click
 	if what_sheeps_doing == "walking":
 		if !sheeps_can_collect:
-			DialogueManager.start_dialog(["beeeh beeeeh"], speech_sound)
+			DialogueManager.start_dialog(["Caminen!"], speech_sound)
 		for body in current_bodies:
 			if body:
 				move_towards_random_point(body, delta)
