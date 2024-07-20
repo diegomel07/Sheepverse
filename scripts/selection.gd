@@ -159,8 +159,9 @@ func _process(delta):
 	
 	for slot in inventory.slots:
 		if slot.item and slot.item.name == 'grass':
-			your_food += 1
-
+			your_food += slot.amount
+	
+	print( " ovejas con 0: ", cont_sheeps_0_stamina, " comida: ", your_food)
 	if your_food == 0 and cont_sheeps_0_stamina == sheeps.size():
 		$"../CanvasLayer/badending".visible = true
 		you_lose = true
@@ -253,10 +254,10 @@ func check_tile():
 			for body in current_bodies:
 				if body:
 					sheep_collecting_energy = body
-					if body and body.get_stamina() >= 0:
+					if body and body.get_stamina() > 0:
 						cont_sheeps_with_stamina += 1
 						body.set_stamina(body.get_stamina()-1)
-				print('La oveja ', body.name, ' tiene ', body.get_stamina(), ' de stamina')
+				#print('La oveja ', body.name, ' tiene ', body.get_stamina(), ' de stamina')
 			tile_erase_layer = i
 			tile_erase_position = tile_position
 			time_collecting = 0
@@ -337,7 +338,7 @@ func move_towards_random_point(body, delta):
 
 func unstuck_body(body):
 	if body:
-		print(body.name, " está atascado. Reubicando...")
+		#print(body.name, " está atascado. Reubicando...")
 		# Reasigna un nuevo destino
 		body_destinations.erase(body)
 		var new_destination = assign_destination(body)
