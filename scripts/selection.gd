@@ -114,30 +114,50 @@ func update_polygon():
 @onready var cloning_timer: Timer = $cloning_timer
 
 var is_cloning = false
+
 func start_cloning():
+	if is_cloning:
+		return  # Evita iniciar el clonado si ya está en proceso
+
 	is_cloning = true
 	collecting_animation.visible = true
 	collecting_animation.global_position = target_position
 	collecting_animation.get_node("AnimatedSprite2D").play("cloning")
 	
-	# Usar call_deferred para ejecutar finish_cloning en el próximo frame
+	# Usar create_timer para programar finish_cloning
 	get_tree().create_timer(3.0).timeout.connect(finish_cloning, CONNECT_ONE_SHOT)
 
 func finish_cloning():
-	#print('awitado')
+	if not is_cloning:
+		return  # Evita ejecutar si el clonado ya ha sido cancelado o finalizado
+
 	collecting_animation.visible = false
 	collecting_animation.get_node("AnimatedSprite2D").stop()
-	tile_map.set_cell(1,tile_erase_position, 0,Vector2(5,2))
+	tile_map.set_cell(1, tile_erase_position, 0, Vector2(5,2))
 	sheep_cloning.visible = true
 	on_machine = false
-	player.set_energy(player.get_energy() - 10)
 	
-	var new_sheep = sheep.instantiate()
-	new_sheep.set_stamina(0)
-	new_sheep.global_position = Vector2(6 * 32, 6 * 32)
-	print("clonada")
-	%sheeps.add_child(new_sheep)
-	
+	if player.get_energy() >= 10:
+		player.set_energy(player.get_energy() - 10)
+		
+		var new_sheep = sheep.instantiate()
+		if new_sheep:
+			new_sheep.set_stamina(0)
+			new_sheep.global_position = Vector2(6 * 32, 6 * 32)
+			print("Oveja clonada")
+			
+			# Asegurarse de que %sheeps existe antes de agregar la nueva oveja
+			var sheeps_node = get_node_or_null("%sheeps")
+			if sheeps_node:
+				sheeps_node.add_child(new_sheep)
+			else:
+				print("Error: Nodo %sheeps no encontrado")
+				new_sheep.queue_free()  # Liberar la instancia si no se puede añadir
+		else:
+			print("Error: No se pudo instanciar la oveja")
+	else:
+		print("Energía insuficiente para clonar")
+
 	is_cloning = false
 
 var cont_sheeps_0_stamina = 0
@@ -161,7 +181,7 @@ func _process(delta):
 		if slot.item and slot.item.name == 'grass':
 			your_food += slot.amount
 	
-	print( " ovejas con 0: ", cont_sheeps_0_stamina, " comida: ", your_food)
+	#print( " ovejas con 0: ", cont_sheeps_0_stamina, " comida: ", your_food)
 	if your_food == 0 and cont_sheeps_0_stamina == sheeps.size():
 		$"../CanvasLayer/badending".visible = true
 		you_lose = true
