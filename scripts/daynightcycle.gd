@@ -11,6 +11,7 @@ const INGAME_TO_REAL_MINUTE_DURATION = (2 * PI) / MINUTES_PER_DAY
 
 signal time_tick(day:int, hour:int, minute:int)
 signal a_mimir()
+signal lose()
 
 
 @export var gradient_texture:GradientTexture1D
@@ -46,7 +47,7 @@ func _recalculate_time(delta: float) -> void:
 	var hour = int(current_day_minutes / MINUTES_PER_HOUR)
 	var minute = int(current_day_minutes % MINUTES_PER_HOUR)
 	
-	 # Comprobamos si son las 6 AM o 6 PM
+	# Comprobamos si son las 6 AM o 6 PM
 	if hour == 18 and minute == 0:
 		a_mimir.emit()
 		# Saltamos 12 horas
@@ -59,9 +60,9 @@ func _recalculate_time(delta: float) -> void:
 		minute = int(current_day_minutes % MINUTES_PER_HOUR)
 	
 	if day == 3:
-		print('perdiste')
+		lose.emit()
 	
 	if past_minute != minute:
 		past_minute = minute
 		time_tick.emit(day, hour, minute)
-		print("Dia: ",day ," hora: ",hour,  " minuto: ", minute)
+		#print("Dia: ",day ," hora: ",hour,  " minuto: ", minute)

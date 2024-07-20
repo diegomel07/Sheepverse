@@ -20,10 +20,10 @@ func _process(delta):
 func _input(event):
 	if event.is_pressed() and not event is InputEventMouseButton:
 		print(cinematicsCountdown)
-		if cinematicsCountdown < 8:
+		if cinematicsCountdown < 10:
 			changeCinematic()
 			return
-		if status == ResourceLoader.THREAD_LOAD_LOADED and cinematicsCountdown == 8:
+		if status == ResourceLoader.THREAD_LOAD_LOADED and cinematicsCountdown == 10:
 			var newScene = ResourceLoader.load_threaded_get(scene)
 			get_tree().change_scene_to_packed(newScene)
 func changeCinematic():

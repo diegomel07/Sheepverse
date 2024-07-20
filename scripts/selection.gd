@@ -37,8 +37,10 @@ var can_collect_energy = false
 var on_machine = false
 var sheep_collecting_energy
 var sheep_cloning
+var you_lose
 
 func _ready():
+	var you_lose = false
 	polygon = Polygon2D.new()
 	polygon.color = Color(0, 0, 0, 0.5)  # Azul semitransparente
 	add_child(polygon)
@@ -55,6 +57,8 @@ func restore_stamina(sheep):
 				sheep.stamina += 20
 
 func _unhandled_input(event):
+	if you_lose and event.is_pressed():
+		get_tree().quit()
 	if event.is_action_pressed("eat"):
 		for sheep in sheeps:
 			# si la oveja tiene la stamina menor a 50 recuperar, cada pasto recupera 5
@@ -128,20 +132,33 @@ func finish_cloning():
 	player.set_energy(player.get_energy() - 10)
 	
 	var new_sheep = sheep.instantiate()
-	sheep.set_stamina(0)  
+	new_sheep.set_stamina(0)
 	new_sheep.global_position = Vector2(6 * 32, 6 * 32)
 	print("clonada")
 	%sheeps.add_child(new_sheep)
 	
 	is_cloning = false
 
+var cont_sheeps_0_stamina = 0
 func _process(delta):
+	cont_sheeps_0_stamina = 0
+	sheeps = %sheeps.get_children()
 	if sheeps.size() > 50:
-		print('ganaste')
+		$"../CanvasLayer/goodending".visible = true
+		you_lose = true
 	if sheeps.size() == 0:
-		print('perdiste')
+		$"../CanvasLayer/badending".visible = true
+		you_lose = true
 	
-	if on_machine and player.get_energy() >= 10 and not is_cloning and sheep_cloning:
+	for sheep in sheeps:
+		if sheep.get_stamina() <= -11:
+			cont_sheeps_0_stamina += 1
+	
+	if cont_sheeps_0_stamina == sheeps.size():
+		$"../CanvasLayer/badending".visible = true
+		you_lose = true
+	
+	if on_machine and player.get_energy() >= 10 and not is_cloning and sheep_cloning and sheep_cloning.get_stamina() > 0:
 		tile_map.erase_cell(tile_erase_layer, tile_erase_position)
 		start_cloning()
 		
@@ -367,3 +384,7 @@ func _on_canvas_modulate_a_mimir():
 	await ap.animation_finished
 	
 	get_tree().paused = false
+
+func _on_canvas_modulate_lose():
+	$"../CanvasLayer/badending".visible = true
+	you_lose = true

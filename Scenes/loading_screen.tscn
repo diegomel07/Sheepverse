@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c4peaw71bvfry"]
+[gd_scene load_steps=14 format=3 uid="uid://c4peaw71bvfry"]
 
 [ext_resource type="Script" path="res://scripts/loading_screen.gd" id="1_5dt8c"]
 [ext_resource type="Texture2D" uid="uid://cj1nfnf1xeb5b" path="res://assets/cinematica/cinameteca1.png" id="2_hyv52"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://cwxv8l5ats7fc" path="res://assets/cinematica/cinameteca4.png" id="5_2483n"]
 [ext_resource type="Texture2D" uid="uid://iqxdrnjr3kt3" path="res://assets/cinematica/cinameteca5.png" id="6_7kj3x"]
 [ext_resource type="Texture2D" uid="uid://crfdll6ntfthq" path="res://assets/cinematica/cinameteca6.png" id="7_sax62"]
+[ext_resource type="Texture2D" uid="uid://blcqthsrc24fp" path="res://assets/cinematica/Instrucciones1.png" id="10_jgpk4"]
+[ext_resource type="Texture2D" uid="uid://dsllp1th0sa1" path="res://assets/cinematica/Instrucciones2.png" id="11_hb6do"]
 
 [sub_resource type="Animation" id="Animation_6cinu"]
 resource_name = "loading"
@@ -35,10 +37,10 @@ position = Vector2(640, 480)
 texture = ExtResource("2_w42xg")
 
 [node name="volume_slider" type="HSlider" parent="Cinematica1"]
-offset_left = 274.0
-offset_top = 394.0
-offset_right = 629.0
-offset_bottom = 410.0
+offset_left = 297.0
+offset_top = 392.0
+offset_right = 622.0
+offset_bottom = 443.0
 max_value = 1.0
 step = 0.001
 script = ExtResource("3_woxar")
@@ -73,3 +75,13 @@ texture = ExtResource("6_7kj3x")
 visible = false
 position = Vector2(640, 480)
 texture = ExtResource("7_sax62")
+
+[node name="Cinematica8" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(640, 480)
+texture = ExtResource("10_jgpk4")
+
+[node name="Cinematica9" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(640, 480)
+texture = ExtResource("11_hb6do")
