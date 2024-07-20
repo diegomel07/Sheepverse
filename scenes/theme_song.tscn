@@ -3,6 +3,7 @@
 [ext_resource type="AudioStream" uid="uid://dbt56tje0ncdr" path="res://assets/sounds/Sueños Rotos.mp3" id="1_vsujc"]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer"]
+process_mode = 3
 stream = ExtResource("1_vsujc")
 autoplay = true
 bus = &"music"

@@ -151,7 +151,7 @@ func _process(delta):
 		you_lose = true
 	
 	for sheep in sheeps:
-		if sheep.get_stamina() <= -11:
+		if sheep.get_stamina() < 0:
 			cont_sheeps_0_stamina += 1
 	
 	if cont_sheeps_0_stamina == sheeps.size():
