@@ -5,9 +5,12 @@ extends Area2D
 @onready var inventory: Inventory = preload("res://inventory/items/player_inventory.tres")
 @onready var sheeps = %sheeps.get_children()
 @onready var player = %Player
-@onready var sheep = preload("res://Scenes/sheep.tscn")
+@onready var sheep = preload("res://scenes/sheep.tscn")
 @onready var speech_sound = preload("res://assets/sounds/meeeeeh.wav")
 @onready var speech_sound2 = preload("res://assets/sounds/click.wav")
+@onready var cloning_timer: Timer = $cloning_timer
+
+var is_cloning = false
 
 
 var polygon: Polygon2D
@@ -24,7 +27,7 @@ var target_radius: float = 80  # Radio del círculo objetivo
 var global_mouse = Vector2.ZERO
 var body_destinations = {}
 var stuck_timeout = 1.0  # Segundos antes de considerar que un cuerpo está atascado
-var collect_timeout = 5.0 # Segundos que se tardan en recolectar
+var collect_timeout = 13.0 # Segundos que se tardan en recolectar
 var body_stuck_time = {}
 var can_change_target = true
 var what_sheeps_doing: String = 'nothing'
@@ -111,53 +114,37 @@ func update_polygon():
 	collision_polygon.disabled = true
 	collision_polygon.disabled = false
 	
-@onready var cloning_timer: Timer = $cloning_timer
 
-var is_cloning = false
 
 func start_cloning():
-	if is_cloning:
-		return  # Evita iniciar el clonado si ya está en proceso
-
+	
+	#print('empezar clonacion')
 	is_cloning = true
 	collecting_animation.visible = true
 	collecting_animation.global_position = target_position
 	collecting_animation.get_node("AnimatedSprite2D").play("cloning")
 	
-	# Usar create_timer para programar finish_cloning
-	get_tree().create_timer(3.0).timeout.connect(finish_cloning, CONNECT_ONE_SHOT)
+	# Usar call_deferred para ejecutar finish_cloning en el próximo frame
+	get_tree().create_timer(3.0).timeout.connect(finish_cloning)
 
 func finish_cloning():
-	if not is_cloning:
-		return  # Evita ejecutar si el clonado ya ha sido cancelado o finalizado
-
+	
+	#print('terminar clonacion')
 	collecting_animation.visible = false
 	collecting_animation.get_node("AnimatedSprite2D").stop()
-	tile_map.set_cell(1, tile_erase_position, 0, Vector2(5,2))
-	sheep_cloning.visible = true
-	on_machine = false
+	tile_map.set_cell(1,tile_erase_position, 0,Vector2(5,2))
 	
-	if player.get_energy() >= 10:
-		player.set_energy(player.get_energy() - 10)
-		
-		var new_sheep = sheep.instantiate()
-		if new_sheep:
-			new_sheep.set_stamina(0)
-			new_sheep.global_position = Vector2(6 * 32, 6 * 32)
-			print("Oveja clonada")
-			
-			# Asegurarse de que %sheeps existe antes de agregar la nueva oveja
-			var sheeps_node = get_node_or_null("%sheeps")
-			if sheeps_node:
-				sheeps_node.add_child(new_sheep)
-			else:
-				print("Error: Nodo %sheeps no encontrado")
-				new_sheep.queue_free()  # Liberar la instancia si no se puede añadir
-		else:
-			print("Error: No se pudo instanciar la oveja")
-	else:
-		print("Energía insuficiente para clonar")
-
+	on_machine = false
+	player.set_energy(player.get_energy() - 10)
+	
+	var new_sheep = sheep.instantiate()
+	new_sheep.set_stamina(0)
+	new_sheep.global_position = Vector2(6 * 32, 6 * 32)
+	#print("clonada")
+	%sheeps.add_child(new_sheep)
+	sheep_cloning.visible = true
+	sheep_cloning = null
+	new_sheep.visible = true
 	is_cloning = false
 
 var cont_sheeps_0_stamina = 0
@@ -166,7 +153,11 @@ func _process(delta):
 	your_food = 0
 	
 	sheeps = %sheeps.get_children()
-	if sheeps.size() > 50:
+	if !on_machine and !can_collect_energy:
+		for sheep in sheeps:
+			sheep.visible = true
+
+	if sheeps.size() > 9:
 		$"../CanvasLayer/goodending".visible = true
 		you_lose = true
 	if sheeps.size() == 0:
@@ -187,10 +178,12 @@ func _process(delta):
 		you_lose = true
 	
 	if on_machine and player.get_energy() >= 10 and not is_cloning and sheep_cloning and sheep_cloning.get_stamina() > 0:
+		#print('Funcion Clonar')
 		tile_map.erase_cell(tile_erase_layer, tile_erase_position)
 		start_cloning()
 		
 	if what_sheeps_doing == 'nothing' and sheeps_can_collect:
+		#print('holi')
 		if can_collect_energy:
 			sheep_collecting_energy.visible = false
 			collecting_animation.visible = true
@@ -261,20 +254,24 @@ func check_tile():
 			sheeps_can_collect = false
 			what_sheeps_doing = 'walking'
 		if tile_type == "clone_machine" and player.get_energy() >= 10:
-			DialogueManager.start_dialog(["CLOOOOOONNN"], speech_sound)
+			
 			for body in current_bodies:
 				if body:
-					sheep_cloning = body
-			sheep_cloning.visible = false
-			tile_erase_layer = i
-			tile_erase_position = tile_position
-			on_machine = true
+					if body.stamina > 0:
+						sheep_cloning = body
+			print(sheep_cloning.name)
+			if sheep_cloning:
+				DialogueManager.start_dialog(["CLOOOOOONNN"], speech_sound)
+				sheep_cloning.visible = false
+				tile_erase_layer = i
+				tile_erase_position = tile_position
+				on_machine = true
 		if tile_type == 'rock' or tile_type == 'wood' or tile_type == "grass" or tile_type == "energy":
 			DialogueManager.start_dialog(["Recolecten!"], speech_sound)
 			for body in current_bodies:
 				if body:
-					sheep_collecting_energy = body
 					if body and body.get_stamina() > 0:
+						sheep_collecting_energy = body
 						cont_sheeps_with_stamina += 1
 						body.set_stamina(body.get_stamina()-1)
 				#print('La oveja ', body.name, ' tiene ', body.get_stamina(), ' de stamina')
@@ -404,7 +401,7 @@ func _on_canvas_modulate_a_mimir():
 	var sheep_position
 	for sheep in sheeps:
 		sheep_position = tile_map.local_to_map(tile_map.to_local(sheep.global_position))
-		print(sheep_position)
+		#print(sheep_position)
 		if (sheep_position.x > 17 or sheep_position.x < 0) or (sheep_position.y > 16 or sheep_position.y < 0):
 			sheep.queue_free()
 	

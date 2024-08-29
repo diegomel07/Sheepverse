@@ -22,9 +22,11 @@ ThemeSong="*res://scenes/theme_song.tscn"
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=960
-window/size/resizable=false
+window/size/viewport_width=768
+window/size/viewport_height=576
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
+window/main_scene="res://scenes/World.tscn"
 
 [editor]
 

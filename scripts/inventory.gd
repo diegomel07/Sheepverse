@@ -71,7 +71,7 @@ func on_slot_clicked(slot):
 		put_material(['wood'], 4)
 	elif slot.item_name == 'hamster':
 		put_material()
-		put_material(['rock'], 4)
+		put_material(['rock', 'wood'], 8)
 
 	
 	update()

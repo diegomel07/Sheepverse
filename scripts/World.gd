@@ -5,8 +5,8 @@ extends Node2D
 var noise : Noise
 var tilemap : TileMap
 var tileId = 0
-var width = 500
-var height = 500
+var width = 100
+var height = 100
 var matrix
 
 var tileTypes = {

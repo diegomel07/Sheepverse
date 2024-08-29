@@ -7,7 +7,7 @@ var cinematics = []
 #Called when the node enters the scene tree for the first time.
 func _ready():
 	set_process_input(true)
-	scene = "res://Scenes/World.tscn"
+	scene = "res://scenes/World.tscn"
 	ResourceLoader.load_threaded_request(scene)
 	pass # Replace with function body.
 
@@ -19,7 +19,6 @@ func _process(delta):
 
 func _input(event):
 	if event.is_pressed() and not event is InputEventMouseButton:
-		print(cinematicsCountdown)
 		if cinematicsCountdown < 10:
 			changeCinematic()
 			return
