@@ -76,7 +76,7 @@ func getZone(value):
 			zone = "land"
 		else:
 			zone = "darkLand"
-	return zone
+	return "land"
 		
 func areaAvailable(startX, startY, value):
 	for x in range(startX-2, startX + 2):
